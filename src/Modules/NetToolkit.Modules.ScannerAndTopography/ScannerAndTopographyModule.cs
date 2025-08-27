@@ -444,11 +444,11 @@ public class ScannerAndTopographyModule : IModule
                 break;
                 
             case "routing loop detection":
-                _logger?.LogInfo("🔍 Unlocking routing loop detection - Infinite paths glow ominously red!");
+                _logger?.LogInformation("🔍 Unlocking routing loop detection - Infinite paths glow ominously red!");
                 break;
                 
             case "load balancing visualization":
-                _logger?.LogInfo("⚖️ Unlocking load balancing visualization - Traffic flows like cosmic rivers!");
+                _logger?.LogInformation("⚖️ Unlocking load balancing visualization - Traffic flows like cosmic rivers!");
                 break;
                 
             default:

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NetToolkit.Modules.MicrosoftAdmin")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be18a5131565d7f6d45bc5cef76f3cedd82f6e8f")]
 [assembly: System.Reflection.AssemblyProductAttribute("NetToolkit.Modules.MicrosoftAdmin")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NetToolkit.Modules.MicrosoftAdmin")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

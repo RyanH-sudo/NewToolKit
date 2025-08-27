@@ -27,7 +27,7 @@ public class SecurityService
         new Regex(@"\b(DROP|DELETE|INSERT|UPDATE|SELECT)\s+(TABLE|FROM|INTO)", RegexOptions.IgnoreCase),
         new Regex(@"union\s+select", RegexOptions.IgnoreCase),
         new Regex(@"(\.|%2e)(\.|%2e)(\/|%2f|\\|%5c)", RegexOptions.IgnoreCase), // Directory traversal
-        new Regex(@"[<>\"'&]", RegexOptions.None) // Basic HTML injection characters
+        new Regex(@"[<>""'&]", RegexOptions.None) // Basic HTML injection characters
     };
 
     // Sensitive information patterns

@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyDescriptionAttribute(("Aesthetic culmination module providing premium UI polish, Three.js enhancements, " +
     "and holographic visual experiences"))]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be18a5131565d7f6d45bc5cef76f3cedd82f6e8f")]
 [assembly: System.Reflection.AssemblyProductAttribute("NetToolkit.Modules.UiPolish")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NetToolkit UI Polish & Three.js Enhancements")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

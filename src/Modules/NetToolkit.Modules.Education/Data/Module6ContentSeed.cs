@@ -399,7 +399,7 @@ public static class Module6ContentSeed
                             'correctAnswer': 1,
                             'explanation': 'Excellent! VPNs create encrypted tunnels that scramble your data and make you appear to be browsing from the VPN server\\'s location. It\\'s like wearing an invisibility cloak while traveling through the internet!'
                         }
-                    "
+                    }"
                 }
             ],
             Prerequisites = new List<int> { 103 },

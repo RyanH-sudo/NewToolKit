@@ -6,6 +6,7 @@ using NetToolkit.Modules.MicrosoftAdmin.Events;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Text;
+using System.IO;
 
 namespace NetToolkit.Modules.MicrosoftAdmin.Services;
 
