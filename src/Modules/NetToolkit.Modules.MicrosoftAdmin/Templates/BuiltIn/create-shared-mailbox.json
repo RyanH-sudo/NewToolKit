@@ -1,0 +1,121 @@
+{
+  "id": "create-shared-mailbox",
+  "name": "Create Shared Mailbox",
+  "description": "Create and configure a shared mailbox for team collaboration - where teamwork magic happens",
+  "category": "Mailbox Management",
+  "author": "NetToolkit Team",
+  "version": "1.0.0",
+  "script": "# Create shared mailbox - collaboration portal manifestation\nConnect-ExchangeOnline -ShowProgress $false\ntry {\n    Write-Output \"🪄 Creating shared mailbox '{name}' - collaboration nexus incoming!\"\n    \n    # Create the shared mailbox\n    $mailbox = New-Mailbox -Name '{name}' -DisplayName '{displayName}' -Shared -PrimarySmtpAddress '{email}'\n    \n    # Configure additional settings if specified\n    if ('{description}' -ne '') {\n        Set-Mailbox -Identity '{email}' -CustomAttribute1 '{description}'\n    }\n    \n    # Set quota if specified\n    if ({quota} -gt 0) {\n        Set-Mailbox -Identity '{email}' -ProhibitSendQuota '{quota}GB' -ProhibitSendReceiveQuota '{quotaMax}GB'\n        Write-Output \"📦 Storage quota configured: {quota}GB (max: {quotaMax}GB)\"\n    }\n    \n    Write-Output \"✅ Shared mailbox '{displayName}' created successfully at {email}\"\n    Write-Output \"🎉 Collaboration portal activated - teamwork dreams realized!\"\n    \n    # Display next steps\n    Write-Output \"\"\n    Write-Output \"📋 Next Steps:\"\n    Write-Output \"   1. Add users to mailbox permissions\"\n    Write-Output \"   2. Configure send-as permissions if needed\"\n    Write-Output \"   3. Add to address lists if required\"\n    \n} catch {\n    Write-Error \"Shared mailbox creation failed: $($_.Exception.Message)\"\n    Write-Output \"💥 Collaboration nexus construction interrupted - retry with precision!\"\n    throw\n} finally {\n    Disconnect-ExchangeOnline -Confirm:$false\n}",
+  "parameters": [
+    {
+      "name": "name",
+      "displayName": "Mailbox Name",
+      "description": "Internal name for the shared mailbox (used for identification)",
+      "type": "String",
+      "required": true,
+      "minLength": 3,
+      "maxLength": 64,
+      "placeholder": "Team-Sales",
+      "helpText": "Use a descriptive name without spaces, typically Team-DepartmentName",
+      "validationPattern": "^[a-zA-Z0-9-_]+$",
+      "validationMessage": "Name should contain only letters, numbers, hyphens, and underscores"
+    },
+    {
+      "name": "displayName",
+      "displayName": "Display Name",
+      "description": "Friendly name that users will see in their address book",
+      "type": "String",
+      "required": true,
+      "minLength": 3,
+      "maxLength": 128,
+      "placeholder": "Sales Team Mailbox",
+      "helpText": "This is what users see - make it descriptive and professional"
+    },
+    {
+      "name": "email",
+      "displayName": "Email Address",
+      "description": "Primary email address for the shared mailbox",
+      "type": "Email",
+      "required": true,
+      "placeholder": "sales@company.com",
+      "helpText": "Choose an email that clearly identifies the team or purpose",
+      "validationPattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+      "validationMessage": "Please enter a valid email address for the shared mailbox"
+    },
+    {
+      "name": "description",
+      "displayName": "Description (Optional)",
+      "description": "Brief description of the shared mailbox purpose",
+      "type": "String",
+      "required": false,
+      "maxLength": 256,
+      "placeholder": "Mailbox for sales team communications",
+      "helpText": "Optional description to help identify the mailbox purpose"
+    },
+    {
+      "name": "quota",
+      "displayName": "Storage Quota (GB, Optional)",
+      "description": "Storage quota in GB (leave 0 for default)",
+      "type": "Integer",
+      "required": false,
+      "defaultValue": 0,
+      "minValue": 0,
+      "maxValue": 100,
+      "placeholder": "25",
+      "helpText": "Set to 0 to use default quota, or specify custom quota in GB"
+    },
+    {
+      "name": "quotaMax",
+      "displayName": "Maximum Quota (GB, Optional)",
+      "description": "Maximum quota before blocking (only if quota is specified)",
+      "type": "Integer",
+      "required": false,
+      "defaultValue": 0,
+      "minValue": 0,
+      "maxValue": 150,
+      "placeholder": "30",
+      "helpText": "Should be higher than regular quota if specified"
+    }
+  ],
+  "requiredScopes": [
+    "https://outlook.office365.com/Exchange.Manage"
+  ],
+  "prerequisites": [
+    "Exchange Online PowerShell module installed",
+    "Exchange Administrator role or higher",
+    "Available Exchange Online license (if required by organization)"
+  ],
+  "estimatedDuration": "3-7 minutes",
+  "complexity": "Basic",
+  "tags": ["shared-mailbox", "collaboration", "team", "exchange", "email"],
+  "iconName": "mail-shared",
+  "helpUrl": "https://docs.microsoft.com/en-us/powershell/module/exchange/new-mailbox",
+  "examples": [
+    {
+      "name": "Department Team Mailbox",
+      "description": "Standard shared mailbox for a department",
+      "parameters": {
+        "name": "Team-Marketing",
+        "displayName": "Marketing Team",
+        "email": "marketing@company.com",
+        "description": "Marketing team communications and campaigns",
+        "quota": 25,
+        "quotaMax": 30
+      },
+      "expectedOutcome": "Marketing team can collaborate via shared mailbox with 25GB storage"
+    },
+    {
+      "name": "Support Queue Mailbox",
+      "description": "Customer support shared mailbox",
+      "parameters": {
+        "name": "Support-Queue",
+        "displayName": "Customer Support",
+        "email": "support@company.com",
+        "description": "Customer support ticket management",
+        "quota": 50,
+        "quotaMax": 60
+      },
+      "expectedOutcome": "Support team can manage customer inquiries with generous storage allocation"
+    }
+  ]
+}

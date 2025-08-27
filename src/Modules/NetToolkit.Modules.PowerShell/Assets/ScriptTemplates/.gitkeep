@@ -1,0 +1,2 @@
+# This file ensures the ScriptTemplates directory is created and tracked in git
+# Script templates will be automatically generated here by the ScriptTemplateService

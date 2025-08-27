@@ -1,0 +1,5 @@
+C:\ninja\obj\Debug\net8.0\MinimalTest.csproj.AssemblyReference.cache
+C:\ninja\obj\Debug\net8.0\MinimalTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\ninja\obj\Debug\net8.0\MinimalTest.AssemblyInfoInputs.cache
+C:\ninja\obj\Debug\net8.0\MinimalTest.AssemblyInfo.cs
+C:\ninja\obj\Debug\net8.0\MinimalTest.csproj.CoreCompileInputs.cache

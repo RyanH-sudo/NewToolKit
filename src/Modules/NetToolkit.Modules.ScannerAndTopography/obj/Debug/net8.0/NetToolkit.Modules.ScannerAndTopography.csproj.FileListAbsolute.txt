@@ -1,0 +1,15 @@
+C:\ninja\src\Modules\NetToolkit.Modules.ScannerAndTopography\obj\Debug\net8.0\NetToolkit.Modules.ScannerAndTopography.csproj.AssemblyReference.cache
+C:\ninja\src\Modules\NetToolkit.Modules.ScannerAndTopography\obj\Debug\net8.0\NetToolkit.Modules.ScannerAndTopography.GeneratedMSBuildEditorConfig.editorconfig
+C:\ninja\src\Modules\NetToolkit.Modules.ScannerAndTopography\obj\Debug\net8.0\NetToolkit.Modules.ScannerAndTopography.AssemblyInfoInputs.cache
+C:\ninja\src\Modules\NetToolkit.Modules.ScannerAndTopography\obj\Debug\net8.0\NetToolkit.Modules.ScannerAndTopography.AssemblyInfo.cs
+C:\ninja\src\Modules\NetToolkit.Modules.ScannerAndTopography\obj\Debug\net8.0\NetToolkit.Modules.ScannerAndTopography.csproj.CoreCompileInputs.cache
+C:\ninja\src\Modules\NetToolkit.Modules.ScannerAndTopography\bin\Debug\net8.0\NetToolkit.Modules.ScannerAndTopography.deps.json
+C:\ninja\src\Modules\NetToolkit.Modules.ScannerAndTopography\bin\Debug\net8.0\NetToolkit.Modules.ScannerAndTopography.dll
+C:\ninja\src\Modules\NetToolkit.Modules.ScannerAndTopography\bin\Debug\net8.0\NetToolkit.Modules.ScannerAndTopography.pdb
+C:\ninja\src\Modules\NetToolkit.Modules.ScannerAndTopography\bin\Debug\net8.0\NetToolkit.Core.dll
+C:\ninja\src\Modules\NetToolkit.Modules.ScannerAndTopography\bin\Debug\net8.0\NetToolkit.Core.pdb
+C:\ninja\src\Modules\NetToolkit.Modules.ScannerAndTopography\obj\Debug\net8.0\NetToolk.F9A24278.Up2Date
+C:\ninja\src\Modules\NetToolkit.Modules.ScannerAndTopography\obj\Debug\net8.0\NetToolkit.Modules.ScannerAndTopography.dll
+C:\ninja\src\Modules\NetToolkit.Modules.ScannerAndTopography\obj\Debug\net8.0\refint\NetToolkit.Modules.ScannerAndTopography.dll
+C:\ninja\src\Modules\NetToolkit.Modules.ScannerAndTopography\obj\Debug\net8.0\NetToolkit.Modules.ScannerAndTopography.pdb
+C:\ninja\src\Modules\NetToolkit.Modules.ScannerAndTopography\obj\Debug\net8.0\ref\NetToolkit.Modules.ScannerAndTopography.dll

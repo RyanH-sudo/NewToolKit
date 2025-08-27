@@ -1,0 +1,5 @@
+C:\ninja\src\Modules\NetToolkit.Modules.Education\obj\Debug\net8.0\NetToolkit.Modules.Education.csproj.AssemblyReference.cache
+C:\ninja\src\Modules\NetToolkit.Modules.Education\obj\Debug\net8.0\NetToolkit.Modules.Education.GeneratedMSBuildEditorConfig.editorconfig
+C:\ninja\src\Modules\NetToolkit.Modules.Education\obj\Debug\net8.0\NetToolkit.Modules.Education.AssemblyInfoInputs.cache
+C:\ninja\src\Modules\NetToolkit.Modules.Education\obj\Debug\net8.0\NetToolkit.Modules.Education.AssemblyInfo.cs
+C:\ninja\src\Modules\NetToolkit.Modules.Education\obj\Debug\net8.0\NetToolkit.Modules.Education.csproj.CoreCompileInputs.cache

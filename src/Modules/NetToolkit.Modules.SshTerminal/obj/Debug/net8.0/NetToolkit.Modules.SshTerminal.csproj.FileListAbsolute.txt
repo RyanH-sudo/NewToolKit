@@ -1,0 +1,15 @@
+C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\obj\Debug\net8.0\NetToolkit.Modules.SshTerminal.csproj.AssemblyReference.cache
+C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\obj\Debug\net8.0\NetToolkit.Modules.SshTerminal.GeneratedMSBuildEditorConfig.editorconfig
+C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\obj\Debug\net8.0\NetToolkit.Modules.SshTerminal.AssemblyInfoInputs.cache
+C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\obj\Debug\net8.0\NetToolkit.Modules.SshTerminal.AssemblyInfo.cs
+C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\obj\Debug\net8.0\NetToolkit.Modules.SshTerminal.csproj.CoreCompileInputs.cache
+C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\bin\Debug\net8.0\NetToolkit.Modules.SshTerminal.deps.json
+C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\bin\Debug\net8.0\NetToolkit.Modules.SshTerminal.dll
+C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\bin\Debug\net8.0\NetToolkit.Modules.SshTerminal.pdb
+C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\bin\Debug\net8.0\NetToolkit.Core.dll
+C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\bin\Debug\net8.0\NetToolkit.Core.pdb
+C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\obj\Debug\net8.0\NetToolk.37E3C815.Up2Date
+C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\obj\Debug\net8.0\NetToolkit.Modules.SshTerminal.dll
+C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\obj\Debug\net8.0\refint\NetToolkit.Modules.SshTerminal.dll
+C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\obj\Debug\net8.0\NetToolkit.Modules.SshTerminal.pdb
+C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\obj\Debug\net8.0\ref\NetToolkit.Modules.SshTerminal.dll

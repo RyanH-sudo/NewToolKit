@@ -1,0 +1,46 @@
+{
+  "Id": "add-email-alias",
+  "Name": "Add Email Alias",
+  "Description": "Give a mailbox a secret identity - like a superhero cape for email!",
+  "Category": "Microsoft 365",
+  "Template": "\r\n# Adding email alias {NewAlias} to {UserEmail}\r\n# Secret identity activation - every hero needs an alter ego! \uD83C\uDFAD\r\n\r\ntry {\r\n    Write-Host \u0022Connecting to Exchange Online - Summoning the identity forge...\u0022 -ForegroundColor Cyan\r\n    Connect-ExchangeOnline -ShowProgress $false\r\n    \r\n    Write-Host \u0022\uD83C\uDFAD Adding alias \u0027{NewAlias}\u0027 to {UserEmail}...\u0022 -ForegroundColor Yellow\r\n    Set-Mailbox -Identity \u0022{UserEmail}\u0022 -EmailAddresses @{add=\u0022{NewAlias}\u0022}\r\n    \r\n    Write-Host \u0022\u2705 Alias successfully added! The secret identity is born!\u0022 -ForegroundColor Green\r\n    \r\n    # Verify the alias was added\r\n    $mailbox = Get-Mailbox -Identity \u0022{UserEmail}\u0022\r\n    Write-Host \u0022\uD83D\uDCE7 Current email addresses:\u0022 -ForegroundColor Cyan\r\n    $mailbox.EmailAddresses | ForEach-Object {\r\n        if ($_.ToString().StartsWith(\u0022SMTP:\u0022)) {\r\n            $address = $_.ToString().Substring(5)\r\n            if ($address -eq $mailbox.PrimarySmtpAddress) {\r\n                Write-Host \u0022   \u2713 $address (Primary)\u0022 -ForegroundColor Green\r\n            } else {\r\n                Write-Host \u0022   \u2713 $address (Alias)\u0022 -ForegroundColor White\r\n            }\r\n        }\r\n    }\r\n}\r\ncatch {\r\n    Write-Error \u0022\u274C Alias addition failed: $($_.Exception.Message)\u0022\r\n    Write-Host \u0022The identity forge is jammed! Check domain validity and permissions.\u0022 -ForegroundColor Red\r\n}\r\nfinally {\r\n    Disconnect-ExchangeOnline -Confirm:$false -ErrorAction SilentlyContinue\r\n    Write-Host \u0022\uD83D\uDEAA Identity forge sealed - The magic is complete.\u0022 -ForegroundColor Gray\r\n}",
+  "Parameters": [
+    {
+      "Name": "UserEmail",
+      "DisplayName": "User Email",
+      "Description": "Primary email address of the user",
+      "Type": 3,
+      "IsRequired": true,
+      "DefaultValue": null,
+      "ValidValues": [],
+      "ValidationPattern": "",
+      "PlaceholderText": "john.doe@company.com",
+      "HelpText": ""
+    },
+    {
+      "Name": "NewAlias",
+      "DisplayName": "New Alias",
+      "Description": "The new email alias to add",
+      "Type": 3,
+      "IsRequired": true,
+      "DefaultValue": null,
+      "ValidValues": [],
+      "ValidationPattern": "",
+      "PlaceholderText": "j.doe@company.com",
+      "HelpText": "Must be in the same domain or verified domain"
+    }
+  ],
+  "Author": "NetToolkit",
+  "Version": "1.0.0",
+  "CreatedAt": "2025-08-26T12:57:06.1029798Z",
+  "LastModified": "2025-08-26T12:57:06.1029799Z",
+  "Tags": [
+    "exchange",
+    "alias",
+    "email",
+    "identity"
+  ],
+  "RiskLevel": 0,
+  "HelpText": "",
+  "Prerequisites": []
+}

@@ -1,0 +1,12 @@
+C:\ninja\src\Core\NetToolkit.Core\obj\Debug\net8.0\NetToolkit.Core.csproj.AssemblyReference.cache
+C:\ninja\src\Core\NetToolkit.Core\obj\Debug\net8.0\NetToolkit.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\ninja\src\Core\NetToolkit.Core\obj\Debug\net8.0\NetToolkit.Core.AssemblyInfoInputs.cache
+C:\ninja\src\Core\NetToolkit.Core\obj\Debug\net8.0\NetToolkit.Core.AssemblyInfo.cs
+C:\ninja\src\Core\NetToolkit.Core\obj\Debug\net8.0\NetToolkit.Core.csproj.CoreCompileInputs.cache
+C:\ninja\src\Core\NetToolkit.Core\bin\Debug\net8.0\NetToolkit.Core.deps.json
+C:\ninja\src\Core\NetToolkit.Core\bin\Debug\net8.0\NetToolkit.Core.dll
+C:\ninja\src\Core\NetToolkit.Core\bin\Debug\net8.0\NetToolkit.Core.pdb
+C:\ninja\src\Core\NetToolkit.Core\obj\Debug\net8.0\NetToolkit.Core.dll
+C:\ninja\src\Core\NetToolkit.Core\obj\Debug\net8.0\refint\NetToolkit.Core.dll
+C:\ninja\src\Core\NetToolkit.Core\obj\Debug\net8.0\NetToolkit.Core.pdb
+C:\ninja\src\Core\NetToolkit.Core\obj\Debug\net8.0\ref\NetToolkit.Core.dll

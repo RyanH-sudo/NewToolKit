@@ -1,0 +1,5 @@
+C:\ninja\obj\Debug\net8.0\NetToolkitConsoleTest.csproj.AssemblyReference.cache
+C:\ninja\obj\Debug\net8.0\NetToolkitConsoleTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\ninja\obj\Debug\net8.0\NetToolkitConsoleTest.AssemblyInfoInputs.cache
+C:\ninja\obj\Debug\net8.0\NetToolkitConsoleTest.AssemblyInfo.cs
+C:\ninja\obj\Debug\net8.0\NetToolkitConsoleTest.csproj.CoreCompileInputs.cache

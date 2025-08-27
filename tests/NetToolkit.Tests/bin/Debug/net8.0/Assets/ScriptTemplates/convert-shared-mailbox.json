@@ -1,0 +1,58 @@
+{
+  "Id": "convert-shared-mailbox",
+  "Name": "Convert to Shared Mailbox",
+  "Description": "Transform a user mailbox into a shared mailbox - sharing is caring!",
+  "Category": "Microsoft 365",
+  "Template": "\r\n# Converting {UserEmail} to shared mailbox\r\n# Transformation magic: From personal to communal! \uD83E\uDD1D\r\n\r\ntry {\r\n    Write-Host \u0022Connecting to Exchange Online - Preparing for magical transformation...\u0022 -ForegroundColor Cyan\r\n    Connect-ExchangeOnline -ShowProgress $false\r\n    \r\n    Write-Host \u0022\uD83D\uDD04 Converting {UserEmail} to shared mailbox...\u0022 -ForegroundColor Yellow\r\n    Set-Mailbox -Identity \u0022{UserEmail}\u0022 -Type Shared\r\n    \r\n    Write-Host \u0022\u2705 Conversion complete! The mailbox is now shared with the world!\u0022 -ForegroundColor Green\r\n    \r\n    # Remove the license if requested\r\n    if (\u0022{RemoveLicense}\u0022 -eq \u0022true\u0022) {\r\n        Write-Host \u0022\uD83C\uDFAB Removing user license...\u0022 -ForegroundColor Yellow\r\n        Connect-MsolService\r\n        Set-MsolUserLicense -UserPrincipalName \u0022{UserEmail}\u0022 -RemoveLicenses (Get-MsolUser -UserPrincipalName \u0022{UserEmail}\u0022).Licenses.AccountSkuId\r\n        Write-Host \u0022\u2705 License removed - Communism in the digital age!\u0022 -ForegroundColor Green\r\n    }\r\n    \r\n    # Set permissions if delegates specified\r\n    if (![string]::IsNullOrEmpty(\u0022{Delegates}\u0022)) {\r\n        $delegates = \u0022{Delegates}\u0022 -split \u0022,\u0022\r\n        foreach ($delegate in $delegates) {\r\n            $delegate = $delegate.Trim()\r\n            Write-Host \u0022\uD83D\uDC65 Adding delegate: $delegate\u0022 -ForegroundColor Cyan\r\n            Add-MailboxPermission -Identity \u0022{UserEmail}\u0022 -User $delegate -AccessRights FullAccess -InheritanceType All\r\n            Add-RecipientPermission -Identity \u0022{UserEmail}\u0022 -Trustee $delegate -AccessRights SendAs -Confirm:$false\r\n        }\r\n        Write-Host \u0022\u2705 Delegates configured - The fellowship is complete!\u0022 -ForegroundColor Green\r\n    }\r\n}\r\ncatch {\r\n    Write-Error \u0022\u274C Conversion failed: $($_.Exception.Message)\u0022\r\n    Write-Host \u0022The sharing spirits are reluctant! Check permissions and try again.\u0022 -ForegroundColor Red\r\n}\r\nfinally {\r\n    Disconnect-ExchangeOnline -Confirm:$false -ErrorAction SilentlyContinue\r\n    Write-Host \u0022\uD83D\uDEAA Transformation complete - The ritual ends.\u0022 -ForegroundColor Gray\r\n}",
+  "Parameters": [
+    {
+      "Name": "UserEmail",
+      "DisplayName": "User Email",
+      "Description": "Email address of the mailbox to convert",
+      "Type": 3,
+      "IsRequired": true,
+      "DefaultValue": null,
+      "ValidValues": [],
+      "ValidationPattern": "",
+      "PlaceholderText": "departing.user@company.com",
+      "HelpText": ""
+    },
+    {
+      "Name": "RemoveLicense",
+      "DisplayName": "Remove License",
+      "Description": "Remove the user\u0027s Microsoft 365 license after conversion",
+      "Type": 2,
+      "IsRequired": false,
+      "DefaultValue": true,
+      "ValidValues": [],
+      "ValidationPattern": "",
+      "PlaceholderText": "",
+      "HelpText": "Shared mailboxes under 50GB don\u0027t require licenses"
+    },
+    {
+      "Name": "Delegates",
+      "DisplayName": "Delegate Emails",
+      "Description": "Comma-separated list of users to grant access (optional)",
+      "Type": 0,
+      "IsRequired": false,
+      "DefaultValue": null,
+      "ValidValues": [],
+      "ValidationPattern": "",
+      "PlaceholderText": "manager@company.com, assistant@company.com",
+      "HelpText": "Users who will have full access to this shared mailbox"
+    }
+  ],
+  "Author": "NetToolkit",
+  "Version": "1.0.0",
+  "CreatedAt": "2025-08-26T12:57:06.1029788Z",
+  "LastModified": "2025-08-26T12:57:06.1029788Z",
+  "Tags": [
+    "exchange",
+    "shared-mailbox",
+    "conversion",
+    "microsoft365"
+  ],
+  "RiskLevel": 2,
+  "HelpText": "",
+  "Prerequisites": []
+}

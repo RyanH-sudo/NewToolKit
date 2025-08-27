@@ -1,0 +1,73 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <AssemblyTitle>NetToolkit Security &amp; Final Touches</AssemblyTitle>
+    <Description>Ultimate security fortress and deployment readiness module - the capstone of NetToolkit excellence</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
+    
+    <!-- Security & Encryption -->
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+    
+    <!-- Error Handling & Resilience -->
+    <PackageReference Include="Polly" Version="8.2.0" />
+    <PackageReference Include="Polly.Extensions" Version="8.2.0" />
+    
+    <!-- Testing -->
+    <PackageReference Include="xunit" Version="2.6.6" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.6" />
+    <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    
+    <!-- Deployment -->
+    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
+    <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
+    
+    <!-- JSON & Serialization -->
+    <PackageReference Include="System.Text.Json" Version="8.0.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\NetToolkit.Core\NetToolkit.Core.csproj" />
+    <ProjectReference Include="..\NetToolkit.Modules.UiPolish\NetToolkit.Modules.UiPolish.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Security\**" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Templates\**" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Deployment\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Security\" />
+    <Folder Include="Templates\" />
+    <Folder Include="Deployment\" />
+    <Folder Include="Tests\" />
+    <Folder Include="Services\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+</Project>

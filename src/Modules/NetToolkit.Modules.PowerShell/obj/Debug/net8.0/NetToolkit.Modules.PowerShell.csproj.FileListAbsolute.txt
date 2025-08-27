@@ -1,0 +1,15 @@
+C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\obj\Debug\net8.0\NetToolkit.Modules.PowerShell.csproj.AssemblyReference.cache
+C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\obj\Debug\net8.0\NetToolkit.Modules.PowerShell.GeneratedMSBuildEditorConfig.editorconfig
+C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\obj\Debug\net8.0\NetToolkit.Modules.PowerShell.AssemblyInfoInputs.cache
+C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\obj\Debug\net8.0\NetToolkit.Modules.PowerShell.AssemblyInfo.cs
+C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\obj\Debug\net8.0\NetToolkit.Modules.PowerShell.csproj.CoreCompileInputs.cache
+C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\bin\Debug\net8.0\NetToolkit.Modules.PowerShell.deps.json
+C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\bin\Debug\net8.0\NetToolkit.Modules.PowerShell.dll
+C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\bin\Debug\net8.0\NetToolkit.Modules.PowerShell.pdb
+C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\bin\Debug\net8.0\NetToolkit.Core.dll
+C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\bin\Debug\net8.0\NetToolkit.Core.pdb
+C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\obj\Debug\net8.0\NetToolk.D32CE23A.Up2Date
+C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\obj\Debug\net8.0\NetToolkit.Modules.PowerShell.dll
+C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\obj\Debug\net8.0\refint\NetToolkit.Modules.PowerShell.dll
+C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\obj\Debug\net8.0\NetToolkit.Modules.PowerShell.pdb
+C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\obj\Debug\net8.0\ref\NetToolkit.Modules.PowerShell.dll

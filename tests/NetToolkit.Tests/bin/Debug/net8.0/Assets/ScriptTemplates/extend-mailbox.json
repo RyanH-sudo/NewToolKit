@@ -1,0 +1,58 @@
+{
+  "Id": "extend-mailbox",
+  "Name": "Extend Mailbox Quota",
+  "Description": "Expand mailbox quota for a user - because digital hoarding is a real thing!",
+  "Category": "Microsoft 365",
+  "Template": "\r\n# Extending mailbox quota for {UserEmail} to {QuotaGB}GB\r\n# Because everyone deserves more digital storage space! \uD83D\uDCE6\r\n\r\ntry {\r\n    Write-Host \u0022Connecting to Exchange Online - Opening the gates to the cloud kingdom...\u0022 -ForegroundColor Cyan\r\n    Connect-ExchangeOnline -ShowProgress $false\r\n    \r\n    Write-Host \u0022Extending mailbox for {UserEmail} to {QuotaGB}GB...\u0022 -ForegroundColor Yellow\r\n    Set-Mailbox -Identity \u0022{UserEmail}\u0022 -ProhibitSendQuota \u0022{QuotaGB}GB\u0022 -ProhibitSendReceiveQuota \u0022{QuotaGB}GB\u0022 -IssueWarningQuota \u0022{WarningGB}GB\u0022\r\n    \r\n    Write-Host \u0022\u2705 Mailbox successfully extended! Digital horizons have been expanded!\u0022 -ForegroundColor Green\r\n    \r\n    # Get updated mailbox stats\r\n    $mailbox = Get-Mailbox -Identity \u0022{UserEmail}\u0022\r\n    $stats = Get-MailboxStatistics -Identity \u0022{UserEmail}\u0022\r\n    \r\n    Write-Host \u0022\uD83D\uDCCA Updated Mailbox Statistics:\u0022 -ForegroundColor Cyan\r\n    Write-Host \u0022   Current Size: $($stats.TotalItemSize)\u0022 -ForegroundColor White\r\n    Write-Host \u0022   New Quota: $($mailbox.ProhibitSendReceiveQuota)\u0022 -ForegroundColor White\r\n    Write-Host \u0022   Warning Level: $($mailbox.IssueWarningQuota)\u0022 -ForegroundColor White\r\n}\r\ncatch {\r\n    Write-Error \u0022\u274C Mailbox extension failed: $($_.Exception.Message)\u0022\r\n    Write-Host \u0022The digital storage gods are displeased! Check permissions and try again.\u0022 -ForegroundColor Red\r\n}\r\nfinally {\r\n    Disconnect-ExchangeOnline -Confirm:$false -ErrorAction SilentlyContinue\r\n    Write-Host \u0022\uD83D\uDEAA Disconnected from Exchange Online - The gates are sealed.\u0022 -ForegroundColor Gray\r\n}",
+  "Parameters": [
+    {
+      "Name": "UserEmail",
+      "DisplayName": "User Email",
+      "Description": "The email address of the user whose mailbox will be extended",
+      "Type": 3,
+      "IsRequired": true,
+      "DefaultValue": null,
+      "ValidValues": [],
+      "ValidationPattern": "",
+      "PlaceholderText": "user@company.com",
+      "HelpText": "Enter the full email address of the user"
+    },
+    {
+      "Name": "QuotaGB",
+      "DisplayName": "New Quota (GB)",
+      "Description": "The new mailbox quota size in gigabytes",
+      "Type": 1,
+      "IsRequired": true,
+      "DefaultValue": 100,
+      "ValidValues": [],
+      "ValidationPattern": "",
+      "PlaceholderText": "100",
+      "HelpText": "Enter the new quota size (recommended: 50-500 GB)"
+    },
+    {
+      "Name": "WarningGB",
+      "DisplayName": "Warning Quota (GB)",
+      "Description": "Warning threshold (typically 90% of quota)",
+      "Type": 1,
+      "IsRequired": false,
+      "DefaultValue": 90,
+      "ValidValues": [],
+      "ValidationPattern": "",
+      "PlaceholderText": "90",
+      "HelpText": "Warning will be sent when mailbox reaches this size"
+    }
+  ],
+  "Author": "NetToolkit",
+  "Version": "1.0.0",
+  "CreatedAt": "2025-08-26T12:57:06.1029766Z",
+  "LastModified": "2025-08-26T12:57:06.1029767Z",
+  "Tags": [
+    "exchange",
+    "mailbox",
+    "quota",
+    "microsoft365"
+  ],
+  "RiskLevel": 1,
+  "HelpText": "This template extends a user\u0027s mailbox quota in Exchange Online. Ensure you have Exchange admin privileges before running.",
+  "Prerequisites": []
+}

@@ -1,0 +1,5 @@
+C:\ninja\src\Modules\NetToolkit.Modules.AiOrb\obj\Debug\net8.0-windows\NetToolkit.Modules.AiOrb.csproj.AssemblyReference.cache
+C:\ninja\src\Modules\NetToolkit.Modules.AiOrb\obj\Debug\net8.0-windows\NetToolkit.Modules.AiOrb.GeneratedMSBuildEditorConfig.editorconfig
+C:\ninja\src\Modules\NetToolkit.Modules.AiOrb\obj\Debug\net8.0-windows\NetToolkit.Modules.AiOrb.AssemblyInfoInputs.cache
+C:\ninja\src\Modules\NetToolkit.Modules.AiOrb\obj\Debug\net8.0-windows\NetToolkit.Modules.AiOrb.AssemblyInfo.cs
+C:\ninja\src\Modules\NetToolkit.Modules.AiOrb\obj\Debug\net8.0-windows\NetToolkit.Modules.AiOrb.csproj.CoreCompileInputs.cache
