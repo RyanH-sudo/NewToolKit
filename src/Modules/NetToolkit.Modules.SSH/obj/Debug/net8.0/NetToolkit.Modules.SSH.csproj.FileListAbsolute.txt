@@ -1,0 +1,12 @@
+C:\ninja\src\Modules\NetToolkit.Modules.SSH\bin\Debug\net8.0\NetToolkit.Modules.SSH.deps.json
+C:\ninja\src\Modules\NetToolkit.Modules.SSH\bin\Debug\net8.0\NetToolkit.Modules.SSH.dll
+C:\ninja\src\Modules\NetToolkit.Modules.SSH\bin\Debug\net8.0\NetToolkit.Modules.SSH.pdb
+C:\ninja\src\Modules\NetToolkit.Modules.SSH\obj\Debug\net8.0\NetToolkit.Modules.SSH.GeneratedMSBuildEditorConfig.editorconfig
+C:\ninja\src\Modules\NetToolkit.Modules.SSH\obj\Debug\net8.0\NetToolkit.Modules.SSH.AssemblyInfoInputs.cache
+C:\ninja\src\Modules\NetToolkit.Modules.SSH\obj\Debug\net8.0\NetToolkit.Modules.SSH.AssemblyInfo.cs
+C:\ninja\src\Modules\NetToolkit.Modules.SSH\obj\Debug\net8.0\NetToolkit.Modules.SSH.csproj.CoreCompileInputs.cache
+C:\ninja\src\Modules\NetToolkit.Modules.SSH\obj\Debug\net8.0\NetToolkit.Modules.SSH.sourcelink.json
+C:\ninja\src\Modules\NetToolkit.Modules.SSH\obj\Debug\net8.0\NetToolkit.Modules.SSH.dll
+C:\ninja\src\Modules\NetToolkit.Modules.SSH\obj\Debug\net8.0\refint\NetToolkit.Modules.SSH.dll
+C:\ninja\src\Modules\NetToolkit.Modules.SSH\obj\Debug\net8.0\NetToolkit.Modules.SSH.pdb
+C:\ninja\src\Modules\NetToolkit.Modules.SSH\obj\Debug\net8.0\ref\NetToolkit.Modules.SSH.dll

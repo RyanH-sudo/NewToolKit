@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "2oFr38r1+YY=",
+  "dgSpecHash": "U757nGLXlMo=",
   "success": true,
   "projectFilePath": "C:\\ninja\\src\\Modules\\NetToolkit.Modules.SecurityFinal\\NetToolkit.Modules.SecurityFinal.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rhaig\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\rhaig\\.nuget\\packages\\communitytoolkit.mvvm\\8.2.2\\communitytoolkit.mvvm.8.2.2.nupkg.sha512",
     "C:\\Users\\rhaig\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
+    "C:\\Users\\rhaig\\.nuget\\packages\\fluentassertions\\6.12.0\\fluentassertions.6.12.0.nupkg.sha512",
     "C:\\Users\\rhaig\\.nuget\\packages\\materialdesigncolors\\3.1.0\\materialdesigncolors.3.1.0.nupkg.sha512",
     "C:\\Users\\rhaig\\.nuget\\packages\\materialdesignthemes\\5.1.0\\materialdesignthemes.5.1.0.nupkg.sha512",
     "C:\\Users\\rhaig\\.nuget\\packages\\mediatr\\12.2.0\\mediatr.12.2.0.nupkg.sha512",

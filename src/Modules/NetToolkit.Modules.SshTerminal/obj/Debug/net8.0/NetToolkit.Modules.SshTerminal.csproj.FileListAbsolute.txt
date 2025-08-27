@@ -13,3 +13,4 @@ C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\obj\Debug\net8.0\NetToolkit.
 C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\obj\Debug\net8.0\refint\NetToolkit.Modules.SshTerminal.dll
 C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\obj\Debug\net8.0\NetToolkit.Modules.SshTerminal.pdb
 C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\obj\Debug\net8.0\ref\NetToolkit.Modules.SshTerminal.dll
+C:\ninja\src\Modules\NetToolkit.Modules.SshTerminal\obj\Debug\net8.0\NetToolkit.Modules.SshTerminal.sourcelink.json

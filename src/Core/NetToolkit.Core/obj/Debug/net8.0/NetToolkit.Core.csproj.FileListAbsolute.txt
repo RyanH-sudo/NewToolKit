@@ -10,3 +10,4 @@ C:\ninja\src\Core\NetToolkit.Core\obj\Debug\net8.0\NetToolkit.Core.dll
 C:\ninja\src\Core\NetToolkit.Core\obj\Debug\net8.0\refint\NetToolkit.Core.dll
 C:\ninja\src\Core\NetToolkit.Core\obj\Debug\net8.0\NetToolkit.Core.pdb
 C:\ninja\src\Core\NetToolkit.Core\obj\Debug\net8.0\ref\NetToolkit.Core.dll
+C:\ninja\src\Core\NetToolkit.Core\obj\Debug\net8.0\NetToolkit.Core.sourcelink.json

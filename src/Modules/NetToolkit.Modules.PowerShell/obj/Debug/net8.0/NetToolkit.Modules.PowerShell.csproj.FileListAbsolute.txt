@@ -13,3 +13,4 @@ C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\obj\Debug\net8.0\NetToolkit.M
 C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\obj\Debug\net8.0\refint\NetToolkit.Modules.PowerShell.dll
 C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\obj\Debug\net8.0\NetToolkit.Modules.PowerShell.pdb
 C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\obj\Debug\net8.0\ref\NetToolkit.Modules.PowerShell.dll
+C:\ninja\src\Modules\NetToolkit.Modules.PowerShell\obj\Debug\net8.0\NetToolkit.Modules.PowerShell.sourcelink.json

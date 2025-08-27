@@ -3,3 +3,5 @@ C:\ninja\src\Modules\NetToolkit.Modules.UiPolish\obj\Debug\net8.0-windows\NetToo
 C:\ninja\src\Modules\NetToolkit.Modules.UiPolish\obj\Debug\net8.0-windows\NetToolkit.Modules.UiPolish.AssemblyInfoInputs.cache
 C:\ninja\src\Modules\NetToolkit.Modules.UiPolish\obj\Debug\net8.0-windows\NetToolkit.Modules.UiPolish.AssemblyInfo.cs
 C:\ninja\src\Modules\NetToolkit.Modules.UiPolish\obj\Debug\net8.0-windows\NetToolkit.Modules.UiPolish.csproj.CoreCompileInputs.cache
+C:\ninja\src\Modules\NetToolkit.Modules.UiPolish\bin\Debug\net8.0-windows\CoverletSourceRootsMapping_NetToolkit.Modules.UiPolish
+C:\ninja\src\Modules\NetToolkit.Modules.UiPolish\obj\Debug\net8.0-windows\NetToolkit.Modules.UiPolish.sourcelink.json

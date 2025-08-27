@@ -3,3 +3,4 @@ C:\ninja\src\Modules\NetToolkit.Modules.MicrosoftAdmin\obj\Debug\net8.0-windows\
 C:\ninja\src\Modules\NetToolkit.Modules.MicrosoftAdmin\obj\Debug\net8.0-windows\NetToolkit.Modules.MicrosoftAdmin.AssemblyInfoInputs.cache
 C:\ninja\src\Modules\NetToolkit.Modules.MicrosoftAdmin\obj\Debug\net8.0-windows\NetToolkit.Modules.MicrosoftAdmin.AssemblyInfo.cs
 C:\ninja\src\Modules\NetToolkit.Modules.MicrosoftAdmin\obj\Debug\net8.0-windows\NetToolkit.Modules.MicrosoftAdmin.csproj.CoreCompileInputs.cache
+C:\ninja\src\Modules\NetToolkit.Modules.MicrosoftAdmin\obj\Debug\net8.0-windows\NetToolkit.Modules.MicrosoftAdmin.sourcelink.json

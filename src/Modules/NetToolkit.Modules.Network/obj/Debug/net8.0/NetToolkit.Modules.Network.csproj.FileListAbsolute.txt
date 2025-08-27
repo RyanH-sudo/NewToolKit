@@ -1,0 +1,12 @@
+C:\ninja\src\Modules\NetToolkit.Modules.Network\bin\Debug\net8.0\NetToolkit.Modules.Network.deps.json
+C:\ninja\src\Modules\NetToolkit.Modules.Network\bin\Debug\net8.0\NetToolkit.Modules.Network.dll
+C:\ninja\src\Modules\NetToolkit.Modules.Network\bin\Debug\net8.0\NetToolkit.Modules.Network.pdb
+C:\ninja\src\Modules\NetToolkit.Modules.Network\obj\Debug\net8.0\NetToolkit.Modules.Network.GeneratedMSBuildEditorConfig.editorconfig
+C:\ninja\src\Modules\NetToolkit.Modules.Network\obj\Debug\net8.0\NetToolkit.Modules.Network.AssemblyInfoInputs.cache
+C:\ninja\src\Modules\NetToolkit.Modules.Network\obj\Debug\net8.0\NetToolkit.Modules.Network.AssemblyInfo.cs
+C:\ninja\src\Modules\NetToolkit.Modules.Network\obj\Debug\net8.0\NetToolkit.Modules.Network.csproj.CoreCompileInputs.cache
+C:\ninja\src\Modules\NetToolkit.Modules.Network\obj\Debug\net8.0\NetToolkit.Modules.Network.sourcelink.json
+C:\ninja\src\Modules\NetToolkit.Modules.Network\obj\Debug\net8.0\NetToolkit.Modules.Network.dll
+C:\ninja\src\Modules\NetToolkit.Modules.Network\obj\Debug\net8.0\refint\NetToolkit.Modules.Network.dll
+C:\ninja\src\Modules\NetToolkit.Modules.Network\obj\Debug\net8.0\NetToolkit.Modules.Network.pdb
+C:\ninja\src\Modules\NetToolkit.Modules.Network\obj\Debug\net8.0\ref\NetToolkit.Modules.Network.dll
