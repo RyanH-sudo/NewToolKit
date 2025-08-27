@@ -460,27 +460,27 @@ public class SshTerminalModule : IModule
         switch (capabilityLower)
         {
             case "ssh port forwarding":
-                _logger?.LogInfo("🔄 Enabling SSH port forwarding - Local and remote tunneling activated!");
+                _logger?.LogInformation("🔄 Enabling SSH port forwarding - Local and remote tunneling activated!");
                 break;
                 
             case "ssh dynamic tunneling":
-                _logger?.LogInfo("🌀 Enabling SSH dynamic tunneling - SOCKS proxy capabilities unlocked!");
+                _logger?.LogInformation("🌀 Enabling SSH dynamic tunneling - SOCKS proxy capabilities unlocked!");
                 break;
                 
             case "ssh jump host routing":
-                _logger?.LogInfo("🦘 Enabling SSH jump host routing - Multi-hop connections through the cosmos!");
+                _logger?.LogInformation("🦘 Enabling SSH jump host routing - Multi-hop connections through the cosmos!");
                 break;
                 
             case "ssh reverse tunneling":
-                _logger?.LogInfo("↩️ Enabling SSH reverse tunneling - Inbound connection pathways opened!");
+                _logger?.LogInformation("↩️ Enabling SSH reverse tunneling - Inbound connection pathways opened!");
                 break;
                 
             case "network routing via ssh":
-                _logger?.LogInfo("🛤️ Enabling network routing via SSH - Secure network path management!");
+                _logger?.LogInformation("🛤️ Enabling network routing via SSH - Secure network path management!");
                 break;
                 
             case "ssh tunnel automation":
-                _logger?.LogInfo("🤖 Enabling SSH tunnel automation - Self-managing secure pathways!");
+                _logger?.LogInformation("🤖 Enabling SSH tunnel automation - Self-managing secure pathways!");
                 break;
                 
             default:
@@ -501,35 +501,35 @@ public class SshTerminalModule : IModule
         switch (capabilityLower)
         {
             case "advanced bgp ssh management":
-                _logger?.LogInfo("🌐 Unlocking advanced BGP SSH management - Border gateway mastery via secure channels!");
+                _logger?.LogInformation("🌐 Unlocking advanced BGP SSH management - Border gateway mastery via secure channels!");
                 break;
                 
             case "mpls tunnel ssh access":
-                _logger?.LogInfo("🏷️ Unlocking MPLS tunnel SSH access - Label-switched path management through SSH!");
+                _logger?.LogInformation("🏷️ Unlocking MPLS tunnel SSH access - Label-switched path management through SSH!");
                 break;
                 
             case "ospf neighbor ssh configuration":
-                _logger?.LogInfo("🤝 Unlocking OSPF neighbor SSH configuration - Neighbor relationships via secure shell!");
+                _logger?.LogInformation("🤝 Unlocking OSPF neighbor SSH configuration - Neighbor relationships via secure shell!");
                 break;
                 
             case "eigrp ssh tunnel management":
-                _logger?.LogInfo("🔄 Unlocking EIGRP SSH tunnel management - Cisco routing protocol via SSH mastery!");
+                _logger?.LogInformation("🔄 Unlocking EIGRP SSH tunnel management - Cisco routing protocol via SSH mastery!");
                 break;
                 
             case "isis ssh administration":
-                _logger?.LogInfo("🏺 Unlocking ISIS SSH administration - Ancient protocol mastery through modern tunnels!");
+                _logger?.LogInformation("🏺 Unlocking ISIS SSH administration - Ancient protocol mastery through modern tunnels!");
                 break;
                 
             case "multi-hop ssh routing chains":
-                _logger?.LogInfo("⛓️ Unlocking multi-hop SSH routing chains - Complex pathway orchestration!");
+                _logger?.LogInformation("⛓️ Unlocking multi-hop SSH routing chains - Complex pathway orchestration!");
                 break;
                 
             case "ssh routing automation scripts":
-                _logger?.LogInfo("📜 Unlocking SSH routing automation scripts - Intelligent tunnel management!");
+                _logger?.LogInformation("📜 Unlocking SSH routing automation scripts - Intelligent tunnel management!");
                 break;
                 
             case "secure routing protocol tunneling":
-                _logger?.LogInfo("🔒 Unlocking secure routing protocol tunneling - Encrypted pathway establishment!");
+                _logger?.LogInformation("🔒 Unlocking secure routing protocol tunneling - Encrypted pathway establishment!");
                 break;
                 
             default:

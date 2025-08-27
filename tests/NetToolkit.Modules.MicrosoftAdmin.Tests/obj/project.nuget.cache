@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "lfY/NpqUQoA=",
+  "dgSpecHash": "UMAM8fx7ivM=",
   "success": true,
   "projectFilePath": "C:\\ninja\\tests\\NetToolkit.Modules.MicrosoftAdmin.Tests\\NetToolkit.Modules.MicrosoftAdmin.Tests.csproj",
   "expectedPackageFiles": [
@@ -59,8 +59,7 @@
     "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.graph\\5.42.0\\microsoft.graph.5.42.0.nupkg.sha512",
     "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.graph.auth\\1.0.0-preview.7\\microsoft.graph.auth.1.0.0-preview.7.nupkg.sha512",
     "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.graph.core\\3.1.7\\microsoft.graph.core.3.1.7.nupkg.sha512",
-    "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.identity.client\\4.58.1\\microsoft.identity.client.4.58.1.nupkg.sha512",
-    "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.identity.client.nativeinterop\\0.13.14\\microsoft.identity.client.nativeinterop.0.13.14.nupkg.sha512",
+    "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.identity.client\\4.65.0\\microsoft.identity.client.4.65.0.nupkg.sha512",
     "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.identitymodel.abstractions\\7.3.1\\microsoft.identitymodel.abstractions.7.3.1.nupkg.sha512",
     "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\7.3.1\\microsoft.identitymodel.jsonwebtokens.7.3.1.nupkg.sha512",
     "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.identitymodel.logging\\7.3.1\\microsoft.identitymodel.logging.7.3.1.nupkg.sha512",

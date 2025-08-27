@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NetToolkit.Modules.SSH")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+042871a802bba10f00053523c7b3d1b7160e1893")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a8ce8a5a38a99c4e66a3875ec0c22f631a5791b9")]
 [assembly: System.Reflection.AssemblyProductAttribute("NetToolkit.Modules.SSH")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NetToolkit.Modules.SSH")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

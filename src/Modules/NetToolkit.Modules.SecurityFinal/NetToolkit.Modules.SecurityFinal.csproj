@@ -41,7 +41,7 @@
     <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
     
     <!-- JSON & Serialization -->
-    <PackageReference Include="System.Text.Json" Version="8.0.4" />
+    <PackageReference Include="System.Text.Json" Version="9.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 

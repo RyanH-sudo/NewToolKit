@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "HIjM56PZMB8=",
+  "dgSpecHash": "B658WDNb8s4=",
   "success": true,
   "projectFilePath": "C:\\ninja\\src\\Modules\\NetToolkit.Modules.MicrosoftAdmin\\NetToolkit.Modules.MicrosoftAdmin.csproj",
   "expectedPackageFiles": [
@@ -50,8 +50,7 @@
     "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.graph\\5.42.0\\microsoft.graph.5.42.0.nupkg.sha512",
     "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.graph.auth\\1.0.0-preview.7\\microsoft.graph.auth.1.0.0-preview.7.nupkg.sha512",
     "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.graph.core\\3.1.7\\microsoft.graph.core.3.1.7.nupkg.sha512",
-    "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.identity.client\\4.58.1\\microsoft.identity.client.4.58.1.nupkg.sha512",
-    "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.identity.client.nativeinterop\\0.13.14\\microsoft.identity.client.nativeinterop.0.13.14.nupkg.sha512",
+    "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.identity.client\\4.65.0\\microsoft.identity.client.4.65.0.nupkg.sha512",
     "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.identitymodel.abstractions\\7.3.1\\microsoft.identitymodel.abstractions.7.3.1.nupkg.sha512",
     "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\7.3.1\\microsoft.identitymodel.jsonwebtokens.7.3.1.nupkg.sha512",
     "C:\\Users\\rhaig\\.nuget\\packages\\microsoft.identitymodel.logging\\7.3.1\\microsoft.identitymodel.logging.7.3.1.nupkg.sha512",
@@ -122,30 +121,5 @@
     "C:\\Users\\rhaig\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\rhaig\\.nuget\\packages\\system.windows.extensions\\8.0.0\\system.windows.extensions.8.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1902",
-      "level": "Warning",
-      "message": "Package 'Microsoft.Identity.Client' 4.58.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-m5vv-6r4h-3vj9",
-      "projectPath": "C:\\ninja\\src\\Modules\\NetToolkit.Modules.MicrosoftAdmin\\NetToolkit.Modules.MicrosoftAdmin.csproj",
-      "warningLevel": 1,
-      "filePath": "C:\\ninja\\src\\Modules\\NetToolkit.Modules.MicrosoftAdmin\\NetToolkit.Modules.MicrosoftAdmin.csproj",
-      "libraryId": "Microsoft.Identity.Client",
-      "targetGraphs": [
-        "net8.0-windows7.0"
-      ]
-    },
-    {
-      "code": "NU1901",
-      "level": "Warning",
-      "message": "Package 'Microsoft.Identity.Client' 4.58.1 has a known low severity vulnerability, https://github.com/advisories/GHSA-x674-v45j-fwxw",
-      "projectPath": "C:\\ninja\\src\\Modules\\NetToolkit.Modules.MicrosoftAdmin\\NetToolkit.Modules.MicrosoftAdmin.csproj",
-      "warningLevel": 1,
-      "filePath": "C:\\ninja\\src\\Modules\\NetToolkit.Modules.MicrosoftAdmin\\NetToolkit.Modules.MicrosoftAdmin.csproj",
-      "libraryId": "Microsoft.Identity.Client",
-      "targetGraphs": [
-        "net8.0-windows7.0"
-      ]
-    }
-  ]
+  "logs": []
 }

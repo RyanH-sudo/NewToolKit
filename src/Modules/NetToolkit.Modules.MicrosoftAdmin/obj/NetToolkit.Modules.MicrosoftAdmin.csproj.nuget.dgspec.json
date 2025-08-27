@@ -209,7 +209,7 @@
             },
             "Microsoft.Identity.Client": {
               "target": "Package",
-              "version": "[4.58.1, )"
+              "version": "[4.65.0, )"
             },
             "Microsoft.Web.WebView2": {
               "target": "Package",
