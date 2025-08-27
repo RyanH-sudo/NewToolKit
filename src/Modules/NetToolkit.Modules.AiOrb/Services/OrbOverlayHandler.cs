@@ -10,6 +10,10 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
+using WinFormsMouseEventArgs = System.Windows.Forms.MouseEventArgs;
+using WpfToolTip = System.Windows.Controls.ToolTip;
+using WinFormsToolTip = System.Windows.Forms.ToolTip;
 
 namespace NetToolkit.Modules.AiOrb.Services;
 
@@ -619,7 +623,7 @@ public class OrbOverlayHandler : IOrbOverlayHandler, IDisposable
         }
     }
 
-    private void OnOrbMouseMove(object sender, MouseEventArgs e)
+    private void OnOrbMouseMove(object sender, WpfMouseEventArgs e)
     {
         if (_isDragging && _orbWindow != null)
         {

@@ -3,9 +3,10 @@ using NetToolkit.Modules.AiOrb.Interfaces;
 using NetToolkit.Modules.AiOrb.Models;
 using Newtonsoft.Json;
 using Polly;
-using Polly.Extensions.Http;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 
 namespace NetToolkit.Modules.AiOrb.Services;
 

@@ -1099,7 +1099,7 @@ public class EducationContentService : IEducationService
                 ipEvent.IntegrationData["SSHModule"] = "Enable IP-based connections";
             }
 
-            await _eventBus.PublishAsync(ipEvent, cancellationToken);
+            await _eventBus.PublishAsync<IPLessonCompletedEvent>(ipEvent, cancellationToken);
 
             _logger.LogInformation("IP lesson completion event published for user {UserId} lesson {LessonNumber} with {ConceptCount} concepts",
                 userId, lesson.LessonNumber, ipEvent.IPConcepts.Count);
@@ -1420,7 +1420,7 @@ public class EducationContentService : IEducationService
                 scriptingEvent.IntegrationData["SSHModule"] = "Unlock remote script execution";
             }
 
-            await _eventBus.PublishAsync(scriptingEvent, cancellationToken);
+            await _eventBus.PublishAsync<ScriptingLessonCompletedEvent>(scriptingEvent, cancellationToken);
 
             _logger.LogInformation("Scripting lesson completion event published for user {UserId} lesson {LessonNumber} with {ConceptCount} concepts",
                 userId, lesson.LessonNumber, scriptingEvent.ScriptingConcepts.Count);
@@ -1781,7 +1781,7 @@ public class EducationContentService : IEducationService
                 routingEvent.IntegrationData["SSHModule"] = "Enable routing configuration via SSH";
             }
 
-            await _eventBus.PublishAsync(routingEvent, cancellationToken);
+            await _eventBus.PublishAsync<RoutingLessonCompletedEvent>(routingEvent, cancellationToken);
 
             _logger.LogInformation("Routing lesson completion event published for user {UserId} lesson {LessonNumber} with {ConceptCount} concepts",
                 userId, lesson.LessonNumber, routingEvent.RoutingConcepts.Count);
@@ -2014,7 +2014,7 @@ public class EducationContentService : IEducationService
                 }
             };
 
-            await _eventBus.PublishAsync(securityEvent, cancellationToken);
+            await _eventBus.PublishAsync<SecurityLessonCompletedEvent>(securityEvent, cancellationToken);
             
             _logger.LogInformation("Security lesson completion event published for user {UserId}, lesson {LessonNumber} - fortress defenses strengthened!",
                 userId, lesson.Order);
@@ -2223,7 +2223,7 @@ public class EducationContentService : IEducationService
                 wirelessEvent.WirelessIntegrationData["CompletionLevel"] = GetWirelessCompletionLevel(quizScore);
             }
 
-            await _eventBus.PublishAsync(wirelessEvent, cancellationToken);
+            await _eventBus.PublishAsync<WirelessLessonCompletedEvent>(wirelessEvent, cancellationToken);
 
             _logger.LogInformation("📡 Wireless lesson {LessonNumber} completion event published for user {UserId} with {Score}% mastery - {Message}",
                 lesson.LessonNumber, userId, quizScore, wirelessEvent.WirelessAchievementMessage);
@@ -2473,7 +2473,7 @@ public class EducationContentService : IEducationService
             cloudEvent.IntegrationData.Add("CloudPlatforms", new[] { "Azure", "AWS", "GCP" });
             cloudEvent.IntegrationData.Add("EnableAdvancedFeatures", quizScore >= 80);
 
-            await _eventBus.PublishAsync(cloudEvent, cancellationToken);
+            await _eventBus.PublishAsync<CloudLessonCompletedEvent>(cloudEvent, cancellationToken);
 
             _logger.LogInformation("Cloud lesson completion event published for user {UserId}, lesson {LessonId} - sky-high integration unlocked!",
                 userId, lesson.Id);
@@ -2823,17 +2823,13 @@ public class EducationContentService : IEducationService
                 case 19: // Cert-Level: Master Alchemist Design
                     alchemyEvent.ProtocolConcepts.AddRange(new[] { "Enterprise Protocol Design", "Advanced Architecture", "Performance Engineering" });
                     alchemyEvent.ProtocolRecipes.Add("Master Alchemist Formula");
-                    alchemyEvent.UnlocksMultiprotocolArchitecture = true;
-                    alchemyEvent.UnlocksPerformanceOptimization = true;
+                    // Note: UnlocksMultiprotocolArchitecture and UnlocksPerformanceOptimization set in object initializer
                     break;
 
                 case 20: // Quiz Alchemy: Protocol Mastery
                     alchemyEvent.ProtocolConcepts.AddRange(new[] { "Protocol Mastery", "Advanced Integration", "Expert Knowledge" });
                     alchemyEvent.ProtocolRecipes.Add("Grandmaster Elixir");
-                    alchemyEvent.EnablesAdvancedAutomation = true;
-                    alchemyEvent.EnablesProtocolSecurity = true;
-                    alchemyEvent.UnlocksMultiprotocolArchitecture = true;
-                    alchemyEvent.UnlocksPerformanceOptimization = true;
+                    // Note: EnablesAdvancedAutomation, EnablesProtocolSecurity, and unlock properties set in object initializer
                     break;
             }
 
@@ -2845,7 +2841,7 @@ public class EducationContentService : IEducationService
             alchemyEvent.IntegrationData.Add("ProtocolFamilies", new[] { "TCP/IP", "HTTP", "VPN", "IoT", "Cloud" });
             alchemyEvent.IntegrationData.Add("EnableExpertFeatures", quizScore >= 90);
 
-            await _eventBus.PublishAsync(alchemyEvent, cancellationToken);
+            await _eventBus.PublishAsync<ProtocolAlchemyLessonCompletedEvent>(alchemyEvent, cancellationToken);
 
             _logger.LogInformation("Protocol alchemy lesson completion event published for user {UserId}, lesson {LessonId} - advanced mixing mastery unlocked!",
                 userId, lesson.Id);

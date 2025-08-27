@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NetToolkit.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d87675435a927bc7d57214b53c4dd5c955df9f04")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c9707851c4f18905f804cfae8d1c67f366eac72a")]
 [assembly: System.Reflection.AssemblyProductAttribute("NetToolkit.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NetToolkit.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

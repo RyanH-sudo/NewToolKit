@@ -4,6 +4,22 @@ using System.Text.Json.Serialization;
 namespace NetToolkit.Modules.MicrosoftAdmin.Models;
 
 /// <summary>
+/// Microsoft Graph API scope constants for enterprise integration
+/// </summary>
+public static class GraphScopes
+{
+    public const string GroupReadWriteAll = "Group.ReadWrite.All";
+    public const string DirectoryReadWriteAll = "Directory.ReadWrite.All";
+    public const string UserReadWriteAll = "User.ReadWrite.All";
+    public const string MailReadWrite = "Mail.ReadWrite";
+    public const string CalendarsReadWrite = "Calendars.ReadWrite";
+    public const string FilesReadWriteAll = "Files.ReadWrite.All";
+    public const string SitesReadWriteAll = "Sites.ReadWrite.All";
+    public const string MailboxSettingsReadWrite = "MailboxSettings.ReadWrite";
+    public const string RoleManagementRead = "RoleManagement.Read.Directory";
+}
+
+/// <summary>
 /// Authentication result from Microsoft Graph OAuth flow
 /// </summary>
 public class AuthenticationResult
@@ -346,8 +362,8 @@ public static class GraphScopes
     };
 
     public static readonly string[] FullAdminScopes = {
-        UserReadWriteAll, MailboxSettingsReadWrite, GroupReadWriteAll, 
-        DirectoryReadWriteAll, RoleManagementRead
+        GraphScopes.UserReadWriteAll, GraphScopes.MailboxSettingsReadWrite, GraphScopes.GroupReadWriteAll, 
+        GraphScopes.DirectoryReadWriteAll, GraphScopes.RoleManagementRead
     };
 }
 
