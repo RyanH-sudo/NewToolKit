@@ -244,3 +244,8 @@ C:\ninja\tests\NetToolkit.Tests\obj\Debug\net8.0\refint\NetToolkit.Tests.dll
 C:\ninja\tests\NetToolkit.Tests\obj\Debug\net8.0\NetToolkit.Tests.pdb
 C:\ninja\tests\NetToolkit.Tests\obj\Debug\net8.0\NetToolkit.Tests.genruntimeconfig.cache
 C:\ninja\tests\NetToolkit.Tests\obj\Debug\net8.0\ref\NetToolkit.Tests.dll
+C:\ninja\tests\NetToolkit.Tests\bin\Debug\net8.0\System.IO.Pipelines.dll
+C:\ninja\tests\NetToolkit.Tests\bin\Debug\net8.0\System.Text.Encodings.Web.dll
+C:\ninja\tests\NetToolkit.Tests\bin\Debug\net8.0\System.Text.Json.dll
+C:\ninja\tests\NetToolkit.Tests\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+C:\ninja\tests\NetToolkit.Tests\obj\Debug\net8.0\NetToolkit.Tests.sourcelink.json

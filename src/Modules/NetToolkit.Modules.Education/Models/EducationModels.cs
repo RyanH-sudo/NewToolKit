@@ -370,6 +370,13 @@ public class Resource
 #region Progress and Gamification Models
 
 /// <summary>
+/// User module progress tracking alias for compatibility
+/// </summary>
+public class UserModuleProgress : ModuleProgress
+{
+}
+
+/// <summary>
 /// User progress through a module
 /// </summary>
 public class ModuleProgress

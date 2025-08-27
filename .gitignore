@@ -267,3 +267,6 @@ Thumbs.db
 *.nupkg
 **/packages/*
 !**/packages/build/
+
+# Local prompts folder (not for repository)
+prompts/

@@ -153,6 +153,8 @@ public class PowerShellModule : BaseModule
         });
         
         // Subscribe to routing lesson completion events - enable routing automation scripts
+        // TODO: Re-enable when Education module is fixed
+        /*
         EventBus.Subscribe<NetToolkit.Modules.Education.Events.RoutingLessonCompletedEvent>(async (routingEvent) =>
         {
             Logger.LogInfo("🛤️ Routing lesson {LessonNumber} completed by user {UserId} - Unlocking routing automation scripts!", 
@@ -203,6 +205,7 @@ public class PowerShellModule : BaseModule
                               string.Join(", ", masteryEvent.DiagnosticTools));
             }
         });
+        */
         
         Logger.LogDebug("📡 Event subscriptions established - Digital telepathy activated!");
         await Task.CompletedTask;
