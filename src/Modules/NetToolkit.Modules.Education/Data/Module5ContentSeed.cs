@@ -60,4 +60,63 @@ public static class Module5ContentSeed
 
         return lessons;
     }
+
+    /// <summary>
+    /// Get complete Module 5 content with lessons (INFERRED: combines module metadata with lessons)
+    /// </summary>
+    public static Module GetModule5Content()
+    {
+        return new Module
+        {
+            Id = 5,
+            Title = "Network Security Foundations",
+            Description = "Master fundamental network security principles and defense strategies",
+            Category = "Security",
+            Difficulty = DifficultyLevel.Intermediate,
+            EstimatedMinutes = 600, // 10 hours in minutes
+            Prerequisites = "Complete Module 4: Network Scripting & Automation",
+            LearningOutcomes = "Students will implement security controls, analyze threats, and design defensive network architectures",
+            LearningObjectives = new List<string>
+            {
+                "Understand network security threat landscape",
+                "Implement firewall and access control systems",
+                "Design secure network architectures"
+            },
+            Tags = new List<string> { "security", "firewall", "defense", "intermediate" },
+            Lessons = GetModule5Lessons(),
+            CreatedAt = DateTime.UtcNow
+        };
+    }
+
+    /// <summary>
+    /// Get Module 5 badges for gamification (INFERRED: achievement badges for module completion)
+    /// </summary>
+    public static List<Badge> GetModule5Badges()
+    {
+        return new List<Badge>
+        {
+            new Badge
+            {
+                BadgeId = "security_sentinel",
+                Name = "Security Sentinel",
+                Description = "Successfully completed Network Security Foundations module",
+                Category = BadgeCategory.Progress,
+                Rarity = BadgeRarity.Uncommon,
+                Requirements = "Complete all lessons in Module 5",
+                RewardMessage = "🛡️ Your defensive skills are formidable!",
+                CreatedAt = DateTime.UtcNow
+            },
+            new Badge
+            {
+                BadgeId = "cyber_guardian",
+                Name = "Cyber Guardian",
+                Description = "Demonstrated exceptional network security expertise",
+                Category = BadgeCategory.Special,
+                Rarity = BadgeRarity.Epic,
+                Requirements = "Design and implement a comprehensive security architecture",
+                RewardMessage = "🏰 Your security fortress is impenetrable!",
+                CreatedAt = DateTime.UtcNow
+            }
+        };
+    }
 }

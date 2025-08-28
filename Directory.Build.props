@@ -17,5 +17,12 @@
     <PackageReference Update="Microsoft.Graph" Version="$(MicrosoftGraphVersion)" />
     <PackageReference Update="Microsoft.Extensions.Logging" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Update="Microsoft.Kiota.Http.HttpClientLibrary" Version="1.3.6" />
+    <PackageReference Update="Microsoft.Kiota.Serialization.Json" Version="1.1.5" />
+  </ItemGroup>
+  
+  <!-- Force specific package versions to resolve conflicts -->
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="$(SystemTextJsonVersion)" />
   </ItemGroup>
 </Project>

@@ -44,7 +44,7 @@ public class SshEventPublisher : ISshEventPublisher
                 EnableLogging = connectionParams.EnableLogging
             };
             
-            await _eventBus.PublishAsync(new { EventName = "ssh.connection.established", Data = eventData });
+            await _eventBus.PublishAsync(new { EventName = "ssh.connection.established", Data = eventData }, CancellationToken.None);
             
             _logger.LogDebug("🌉 Published connection established event for session {SessionId} to {Target}",
                 sessionId, GetConnectionTarget(connectionParams));
@@ -74,7 +74,7 @@ public class SshEventPublisher : ISshEventPublisher
                 Preview = data.Length > 100 ? data[..100] + "..." : data
             };
             
-            await _eventBus.PublishAsync(new { EventName = "ssh.data.received", Data = eventData });
+            await _eventBus.PublishAsync(new { EventName = "ssh.data.received", Data = eventData }, CancellationToken.None);
             
             _logger.LogTrace("📨 Published data received event for session {SessionId}: {ByteCount} bytes",
                 sessionId, byteCount);
@@ -107,7 +107,7 @@ public class SshEventPublisher : ISshEventPublisher
                 HasRedirection = command.Contains('>') || command.Contains('<')
             };
             
-            await _eventBus.PublishAsync(new { EventName = "ssh.command.executed", Data = eventData });
+            await _eventBus.PublishAsync(new { EventName = "ssh.command.executed", Data = eventData }, CancellationToken.None);
             
             var status = success ? "✅" : "❌";
             _logger.LogDebug("{Status} Published command executed event for session {SessionId}: {Command} ({ExecutionTime:F2}ms)",
@@ -138,7 +138,7 @@ public class SshEventPublisher : ISshEventPublisher
                 IsRecoverable = IsRecoverableError(exception)
             };
             
-            await _eventBus.PublishAsync(new { EventName = "ssh.error.encountered", Data = eventData });
+            await _eventBus.PublishAsync(new { EventName = "ssh.error.encountered", Data = eventData }, CancellationToken.None);
             
             _logger.LogWarning("⚠️ Published error event for session {SessionId}: {ErrorMessage} (Context: {Context})",
                 sessionId, errorMessage, context ?? "Unknown");
@@ -168,7 +168,7 @@ public class SshEventPublisher : ISshEventPublisher
                 StatusIcon = device.GetStatusIcon()
             };
             
-            await _eventBus.PublishAsync(new { EventName = "ssh.device.detected", Data = eventData });
+            await _eventBus.PublishAsync(new { EventName = "ssh.device.detected", Data = eventData }, CancellationToken.None);
             
             _logger.LogDebug("📱 Published device detected event: {DeviceName} ({DeviceType}) - {Status}",
                 device.Name, deviceType, device.IsAvailable ? "Available" : "Unavailable");
@@ -196,7 +196,7 @@ public class SshEventPublisher : ISshEventPublisher
                 Timestamp = DateTime.UtcNow
             };
             
-            await _eventBus.PublishAsync(new { EventName = "ssh.device.lost", Data = eventData });
+            await _eventBus.PublishAsync(new { EventName = "ssh.device.lost", Data = eventData }, CancellationToken.None);
             
             _logger.LogDebug("📵 Published device lost event: {DeviceName} ({DeviceType})",
                 device.Name, deviceType);
@@ -225,7 +225,7 @@ public class SshEventPublisher : ISshEventPublisher
                 IsImprovement = IsStatusImprovement(oldStatus, newStatus)
             };
             
-            await _eventBus.PublishAsync(new { EventName = "ssh.session.status.changed", Data = eventData });
+            await _eventBus.PublishAsync(new { EventName = "ssh.session.status.changed", Data = eventData }, CancellationToken.None);
             
             _logger.LogDebug("🔄 Published status change event for session {SessionId}: {OldStatus} → {NewStatus}",
                 sessionId, oldStatus, newStatus);
@@ -255,7 +255,7 @@ public class SshEventPublisher : ISshEventPublisher
                 SecurityLevel = GetAuthSecurityLevel(authMethod)
             };
             
-            await _eventBus.PublishAsync(new { EventName = "ssh.authentication.attempt", Data = eventData });
+            await _eventBus.PublishAsync(new { EventName = "ssh.authentication.attempt", Data = eventData }, CancellationToken.None);
             
             var status = success ? "✅" : "❌";
             _logger.LogDebug("{Status} Published authentication event for session {SessionId}: {Username}@{Host} via {AuthMethod}",
@@ -288,7 +288,7 @@ public class SshEventPublisher : ISshEventPublisher
                 XtermFormat = coloredOutput.ToXtermString()
             };
             
-            await _eventBus.PublishAsync(new { EventName = "ssh.terminal.output", Data = eventData });
+            await _eventBus.PublishAsync(new { EventName = "ssh.terminal.output", Data = eventData }, CancellationToken.None);
             
             _logger.LogTrace("📺 Published terminal output event for session {SessionId}: line {LineNumber}",
                 sessionId, lineNumber);
@@ -319,7 +319,7 @@ public class SshEventPublisher : ISshEventPublisher
                 TransferType = DetermineTransferType(fileName)
             };
             
-            await _eventBus.PublishAsync(new { EventName = "ssh.file.transfer", Data = eventData });
+            await _eventBus.PublishAsync(new { EventName = "ssh.file.transfer", Data = eventData }, CancellationToken.None);
             
             var status = success ? "✅" : "❌";
             var arrow = direction == TransferDirection.Upload ? "⬆️" : "⬇️";
@@ -358,7 +358,7 @@ public class SshEventPublisher : ISshEventPublisher
                 ConfigSummary = newConfig.GetConfigSummary()
             };
             
-            await _eventBus.PublishAsync(new { EventName = "ssh.terminal.config.changed", Data = eventData });
+            await _eventBus.PublishAsync(new { EventName = "ssh.terminal.config.changed", Data = eventData }, CancellationToken.None);
             
             _logger.LogDebug("⚙️ Published terminal config change event for session {SessionId}: {ConfigChange}",
                 sessionId, configChange);
@@ -383,7 +383,7 @@ public class SshEventPublisher : ISshEventPublisher
                 ["metric_count"] = metrics.Count
             };
             
-            await _eventBus.PublishAsync(eventData);
+            await _eventBus.PublishAsync(eventData, CancellationToken.None);
             
             _logger.LogTrace("📊 Published session metrics event for session {SessionId}: {MetricCount} metrics",
                 sessionId, metrics.Count);
@@ -414,7 +414,7 @@ public class SshEventPublisher : ISshEventPublisher
                 IntegrationComplexity = GetIntegrationComplexity(deviceInfo.Type)
             };
             
-            await _eventBus.PublishAsync(new { EventName = "ssh.hardware.integration", Data = eventData });
+            await _eventBus.PublishAsync(new { EventName = "ssh.hardware.integration", Data = eventData }, CancellationToken.None);
             
             var status = success ? "✅" : "❌";
             _logger.LogDebug("{Status} Published hardware integration event for session {SessionId}: {DeviceName} via {ConnectionMethod}",
@@ -444,7 +444,7 @@ public class SshEventPublisher : ISshEventPublisher
                 AlertCategory = GetSecurityAlertCategory(alertType)
             };
             
-            await _eventBus.PublishAsync(new { EventName = "ssh.security.alert", Data = eventData });
+            await _eventBus.PublishAsync(new { EventName = "ssh.security.alert", Data = eventData }, CancellationToken.None);
             
             var severityIcon = severity switch
             {
@@ -482,7 +482,7 @@ public class SshEventPublisher : ISshEventPublisher
                 IsActionable = confidence > 0.7f
             };
             
-            await _eventBus.PublishAsync(new { EventName = "ssh.ai.insight", Data = eventData });
+            await _eventBus.PublishAsync(new { EventName = "ssh.ai.insight", Data = eventData }, CancellationToken.None);
             
             _logger.LogDebug("🤖 Published AI insight for session {SessionId}: {InsightType} (confidence: {Confidence:P0})",
                 sessionId, insightType, confidence);
@@ -497,9 +497,29 @@ public class SshEventPublisher : ISshEventPublisher
     
     #region IEventBus Delegation
     
-    public async Task PublishAsync<T>(T eventData) where T : class
+    public async Task PublishAsync<T>(T eventData, CancellationToken cancellationToken = default) where T : class
     {
-        await _eventBus.PublishAsync(eventData);
+        await _eventBus.PublishAsync(eventData, cancellationToken);
+    }
+    
+    public async Task SubscribeAsync<T>(Func<T, Task> handler) where T : class
+    {
+        await _eventBus.SubscribeAsync(handler);
+    }
+    
+    public async Task SubscribeAsync<T>(string eventName, Func<T, Task> handler) where T : class
+    {
+        await _eventBus.SubscribeAsync(eventName, handler);
+    }
+    
+    public async Task UnsubscribeAsync<T>() where T : class
+    {
+        await _eventBus.UnsubscribeAsync<T>();
+    }
+    
+    public async Task UnsubscribeAsync<T>(string eventName, Func<T, Task> handler) where T : class
+    {
+        await _eventBus.UnsubscribeAsync(eventName, handler);
     }
     
     public void Subscribe<T>(Func<T, Task> handler) where T : class

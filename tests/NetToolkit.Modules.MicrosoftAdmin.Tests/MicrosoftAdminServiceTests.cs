@@ -393,7 +393,7 @@ public class MicrosoftAdminServiceTests : IDisposable
         // Assert.True(result);
         
         // Verify sign out event was published
-        _mockEventBus.Verify(eb => eb.PublishAsync(It.IsAny<SignOutEvent>()), Times.Never); // Would be Times.Once
+        _mockEventBus.Verify(eb => eb.PublishAsync(It.IsAny<SignOutEvent>(), It.IsAny<CancellationToken>()), Times.Never); // Would be Times.Once
         
         Assert.True(true); // Placeholder for sign out test
     }
@@ -431,7 +431,7 @@ public class MicrosoftAdminServiceTests : IDisposable
         // Assert.Contains("Test execution", result.Output);
         
         // Verify completion event was published
-        _mockEventBus.Verify(eb => eb.PublishAsync(It.IsAny<AdminTaskCompletedEvent>()), Times.Never); // Would be Times.Once
+        _mockEventBus.Verify(eb => eb.PublishAsync(It.IsAny<AdminTaskCompletedEvent>(), It.IsAny<CancellationToken>()), Times.Never); // Would be Times.Once
         
         Assert.True(true); // Placeholder for integration test
     }
@@ -582,9 +582,9 @@ public static class AdminTestHelpers
     /// <summary>
     /// Create a test authentication result
     /// </summary>
-    public static AuthenticationResult CreateTestAuthResult(bool isSuccess = true)
+    public static NetToolkit.Modules.MicrosoftAdmin.Models.AuthenticationResult CreateTestAuthResult(bool isSuccess = true)
     {
-        return new AuthenticationResult
+        return new NetToolkit.Modules.MicrosoftAdmin.Models.AuthenticationResult
         {
             IsSuccess = isSuccess,
             AccessToken = isSuccess ? "test-access-token" : string.Empty,
@@ -629,6 +629,6 @@ public static class AdminTestHelpers
     /// </summary>
     public static void VerifyEventPublished<T>(Mock<IEventBus> mockEventBus) where T : class
     {
-        mockEventBus.Verify(eb => eb.PublishAsync(It.IsAny<T>()), Times.AtLeastOnce);
+        mockEventBus.Verify(eb => eb.PublishAsync(It.IsAny<T>(), It.IsAny<CancellationToken>()), Times.AtLeastOnce);
     }
 }

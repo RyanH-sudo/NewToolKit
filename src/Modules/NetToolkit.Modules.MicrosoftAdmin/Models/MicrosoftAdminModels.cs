@@ -17,6 +17,16 @@ public static class GraphScopes
     public const string SitesReadWriteAll = "Sites.ReadWrite.All";
     public const string MailboxSettingsReadWrite = "MailboxSettings.ReadWrite";
     public const string RoleManagementRead = "RoleManagement.Read.Directory";
+    
+    // INFERRED: Missing scope properties for basic admin operations
+    public const string UserRead = "User.Read";
+    public static readonly string[] BasicAdminScopes = new string[]
+    {
+        UserReadWriteAll,
+        DirectoryReadWriteAll,
+        GroupReadWriteAll,
+        MailReadWrite
+    };
 }
 
 /// <summary>
@@ -327,45 +337,6 @@ public class ValidationMessage
     public Dictionary<string, object> Context { get; set; } = new();
 }
 
-/// <summary>
-/// Microsoft Graph API scope definitions
-/// </summary>
-public static class GraphScopes
-{
-    // User management scopes
-    public const string UserRead = "User.Read";
-    public const string UserReadAll = "User.Read.All";
-    public const string UserReadWrite = "User.ReadWrite";
-    public const string UserReadWriteAll = "User.ReadWrite.All";
-
-    // Mail and mailbox scopes
-    public const string MailRead = "Mail.Read";
-    public const string MailReadWrite = "Mail.ReadWrite";
-    public const string MailboxSettingsRead = "MailboxSettings.Read";
-    public const string MailboxSettingsReadWrite = "MailboxSettings.ReadWrite";
-
-    // Group management scopes
-    public const string GroupRead = "Group.Read.All";
-    public const string GroupReadWrite = "Group.ReadWrite.All";
-
-    // Directory scopes
-    public const string DirectoryRead = "Directory.Read.All";
-    public const string DirectoryReadWrite = "Directory.ReadWrite.All";
-
-    // Administrative scopes
-    public const string RoleManagementRead = "RoleManagement.Read.All";
-    public const string RoleManagementReadWrite = "RoleManagement.ReadWrite.All";
-
-    // Common scope combinations
-    public static readonly string[] BasicAdminScopes = {
-        UserRead, MailboxSettingsRead, GroupRead, DirectoryRead
-    };
-
-    public static readonly string[] FullAdminScopes = {
-        GraphScopes.UserReadWriteAll, GraphScopes.MailboxSettingsReadWrite, GraphScopes.GroupReadWriteAll, 
-        GraphScopes.DirectoryReadWriteAll, GraphScopes.RoleManagementRead
-    };
-}
 
 /// <summary>
 /// Admin task categories

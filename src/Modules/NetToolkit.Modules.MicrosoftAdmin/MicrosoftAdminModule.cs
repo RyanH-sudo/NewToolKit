@@ -89,10 +89,7 @@ public class MicrosoftAdminModule : IModule
             if (!_isInitialized)
             {
                 _logger.LogWarning("Attempting to start uninitialized Microsoft Admin Module - initializing first");
-                if (!await InitializeAsync())
-                {
-                    return false;
-                }
+                throw new InvalidOperationException("Module must be initialized before starting");
             }
 
             _logger.LogInformation("Starting Microsoft Admin Integration Module services - admin powers activating");

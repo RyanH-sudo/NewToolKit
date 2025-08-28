@@ -60,4 +60,63 @@ public static class Module3ContentSeed
 
         return lessons;
     }
+
+    /// <summary>
+    /// Get complete Module 3 content with lessons (INFERRED: combines module metadata with lessons)
+    /// </summary>
+    public static Module GetModule3Content()
+    {
+        return new Module
+        {
+            Id = 3,
+            Title = "Protocol Fundamentals",
+            Description = "Master the essential networking protocols and communication standards",
+            Category = "Networking",
+            Difficulty = DifficultyLevel.Intermediate,
+            EstimatedMinutes = 480, // 8 hours in minutes
+            Prerequisites = "Complete Module 2: Network Hardware & Devices",
+            LearningOutcomes = "Students will understand core networking protocols, implement protocol configurations, and analyze network communication patterns",
+            LearningObjectives = new List<string>
+            {
+                "Understand TCP/IP protocol suite architecture",
+                "Configure and troubleshoot common protocols",
+                "Analyze network packet flows and communication patterns"
+            },
+            Tags = new List<string> { "networking", "protocols", "tcp-ip", "intermediate" },
+            Lessons = GetModule3Lessons(),
+            CreatedAt = DateTime.UtcNow
+        };
+    }
+
+    /// <summary>
+    /// Get Module 3 badges for gamification (INFERRED: achievement badges for module completion)
+    /// </summary>
+    public static List<Badge> GetModule3Badges()
+    {
+        return new List<Badge>
+        {
+            new Badge
+            {
+                BadgeId = "protocol_pioneer",
+                Name = "Protocol Pioneer",
+                Description = "Successfully completed Protocol Fundamentals module",
+                Category = BadgeCategory.Progress,
+                Rarity = BadgeRarity.Common,
+                Requirements = "Complete all lessons in Module 3",
+                RewardMessage = "🌐 You've mastered the language of networks!",
+                CreatedAt = DateTime.UtcNow
+            },
+            new Badge
+            {
+                BadgeId = "packet_analyst",
+                Name = "Packet Analyst",
+                Description = "Demonstrated advanced protocol analysis skills",
+                Category = BadgeCategory.Mastery,
+                Rarity = BadgeRarity.Rare,
+                Requirements = "Score 90%+ on protocol analysis scenarios",
+                RewardMessage = "📡 Your protocol expertise is extraordinary!",
+                CreatedAt = DateTime.UtcNow
+            }
+        };
+    }
 }

@@ -3,6 +3,8 @@ using NetToolkit.Modules.Education.Interfaces;
 using NetToolkit.Modules.Education.Models;
 using SkiaSharp;
 using System.Text;
+using System.Text.RegularExpressions; // INFERRED: For Regex class
+using System.Text.Json; // INFERRED: For JsonSerializer class
 
 namespace NetToolkit.Modules.Education.Services;
 
@@ -40,8 +42,6 @@ public class SkiaSharpImageGenerator : ISlideGenerator
     {
         try
         {
-            _logger.LogDebug("Generating cosmic image slide: '{Title}' in {Style} style ({Width}x{Height})", 
-                title, style, width, height);
 
             using var bitmap = new SKBitmap(width, height);
             using var canvas = new SKCanvas(bitmap);
@@ -61,8 +61,6 @@ public class SkiaSharpImageGenerator : ISlideGenerator
             
             var imageBytes = data.ToArray();
             
-            _logger.LogDebug("Generated image slide '{Title}' - {Size} bytes of cosmic visual brilliance!", 
-                title, imageBytes.Length);
 
             return imageBytes;
         }
@@ -87,8 +85,6 @@ public class SkiaSharpImageGenerator : ISlideGenerator
     {
         try
         {
-            _logger.LogDebug("Generating cosmic text slide: '{Title}' with {TipCount} hover tips in {Style} style", 
-                title, tips.Count, style);
 
             var htmlBuilder = new StringBuilder();
             
@@ -138,8 +134,6 @@ public class SkiaSharpImageGenerator : ISlideGenerator
 
             var html = htmlBuilder.ToString();
             
-            _logger.LogDebug("Generated text slide '{Title}' - {Length} characters of cosmic educational content!", 
-                title, html.Length);
 
             return html;
         }
@@ -160,8 +154,6 @@ public class SkiaSharpImageGenerator : ISlideGenerator
     {
         try
         {
-            _logger.LogDebug("Generating cosmic quiz slide for question '{QuestionId}' in {Style} style", 
-                question.Id, style);
 
             var htmlBuilder = new StringBuilder();
             
@@ -227,8 +219,6 @@ public class SkiaSharpImageGenerator : ISlideGenerator
                 FeedbackHtml = GenerateFeedbackHtml(question)
             };
 
-            _logger.LogDebug("Generated quiz slide for question '{QuestionId}' - cosmic knowledge testing enabled!", 
-                question.Id);
 
             return quizData;
         }
@@ -257,7 +247,6 @@ public class SkiaSharpImageGenerator : ISlideGenerator
     {
         try
         {
-            _logger.LogDebug("Generating cosmic Three.js slide: '{Title}' with {ModelType} model", title, modelType);
 
             var sceneConfig = GenerateThreeJsSceneConfig(modelType, interactionData);
             var htmlWrapper = GenerateThreeJsHtmlWrapper(title, modelType);
@@ -272,7 +261,6 @@ public class SkiaSharpImageGenerator : ISlideGenerator
                 HtmlWrapper = htmlWrapper
             };
 
-            _logger.LogDebug("Generated Three.js slide '{Title}' - 3D cosmic visualization ready!", title);
 
             return threeJsData;
         }
@@ -295,8 +283,6 @@ public class SkiaSharpImageGenerator : ISlideGenerator
     {
         try
         {
-            _logger.LogDebug("Generating cosmic network diagram: {DiagramType} with {NodeCount} nodes and {ConnectionCount} connections", 
-                diagramType, nodes.Count, connections.Count);
 
             const int width = 800;
             const int height = 600;
@@ -318,8 +304,6 @@ public class SkiaSharpImageGenerator : ISlideGenerator
             
             var diagramBytes = data.ToArray();
             
-            _logger.LogDebug("Generated network diagram '{DiagramType}' - {Size} bytes of cosmic networking wisdom!", 
-                diagramType, diagramBytes.Length);
 
             return diagramBytes;
         }
@@ -3833,7 +3817,7 @@ public class SkiaSharpImageGenerator : ISlideGenerator
         paint.TextSize = 8;
         var ipPositions = new[]
         {
-            new { Angle = 0, IP = "192.168.1.1" },
+            new { Angle = 0.0, IP = "192.168.1.1" },
             new { Angle = Math.PI / 2, IP = "10.0.0.1" },
             new { Angle = Math.PI, IP = "172.16.0.1" },
             new { Angle = 3 * Math.PI / 2, IP = "127.0.0.1" }
@@ -6161,7 +6145,7 @@ public class SkiaSharpImageGenerator : ISlideGenerator
         // Lock shackle
         paint.Style = SKPaintStyle.Stroke;
         paint.StrokeWidth = 3;
-        canvas.DrawArc(centerX - 10, centerY - 95, 20, 20, 0, 180, false, paint);
+        canvas.DrawArc(new SKRect(centerX - 10, centerY - 95, centerX + 10, centerY - 75), 0, 180, false, paint); // INFERRED: Convert to SKRect for SkiaSharp DrawArc
 
         // Draw security glow
         paint.Color = SKColors.Yellow;

@@ -60,4 +60,63 @@ public static class Module1ContentSeed
 
         return lessons;
     }
+
+    /// <summary>
+    /// Get complete Module 1 content with lessons (INFERRED: combines module metadata with lessons)
+    /// </summary>
+    public static Module GetModule1Content()
+    {
+        return new Module
+        {
+            Id = 1,
+            Title = "Network Fundamentals",
+            Description = "Master the basics of computer networking and communication protocols",
+            Category = "Networking",
+            Difficulty = DifficultyLevel.Beginner,
+            EstimatedMinutes = 480, // 8 hours in minutes
+            Prerequisites = "None - This is a beginner-friendly module",
+            LearningOutcomes = "Students will understand network topology concepts, learn about cables and physical connections, and grasp basic communication protocols",
+            LearningObjectives = new List<string>
+            {
+                "Understand network topology concepts",
+                "Learn about cables and physical connections",
+                "Grasp basic communication protocols"
+            },
+            Tags = new List<string> { "networking", "fundamentals", "beginner" },
+            Lessons = GetModule1Lessons(),
+            CreatedAt = DateTime.UtcNow
+        };
+    }
+
+    /// <summary>
+    /// Get Module 1 badges for gamification (INFERRED: achievement badges for module completion)
+    /// </summary>
+    public static List<Badge> GetModule1Badges()
+    {
+        return new List<Badge>
+        {
+            new Badge
+            {
+                BadgeId = "network_novice",
+                Name = "Network Novice",
+                Description = "Successfully completed Network Fundamentals module",
+                Category = BadgeCategory.Progress,
+                Rarity = BadgeRarity.Common,
+                Requirements = "Complete all lessons in Module 1",
+                RewardMessage = "🎉 You've mastered the networking basics!",
+                CreatedAt = DateTime.UtcNow
+            },
+            new Badge
+            {
+                BadgeId = "cable_expert",
+                Name = "Cable Expert",
+                Description = "Demonstrated mastery of physical network connections",
+                Category = BadgeCategory.Mastery,
+                Rarity = BadgeRarity.Uncommon,
+                Requirements = "Score 90%+ on cable identification quiz",
+                RewardMessage = "⚡ Your cable knowledge is electrifying!",
+                CreatedAt = DateTime.UtcNow
+            }
+        };
+    }
 }

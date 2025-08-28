@@ -69,7 +69,7 @@ public class OrbOverlayHandler : IOrbOverlayHandler, IDisposable
                 return true;
             }
 
-            await Application.Current.Dispatcher.InvokeAsync(() =>
+            await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
             {
                 CreateOrbWindow();
                 
@@ -115,7 +115,7 @@ public class OrbOverlayHandler : IOrbOverlayHandler, IDisposable
                 return true;
             }
 
-            await Application.Current.Dispatcher.InvokeAsync(() =>
+            await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
             {
                 // Save current position before hiding
                 SaveCurrentPosition();
@@ -174,7 +174,7 @@ public class OrbOverlayHandler : IOrbOverlayHandler, IDisposable
 
             if (_orbWindow != null && _orbShape != null)
             {
-                await Application.Current.Dispatcher.InvokeAsync(() =>
+                await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     ApplyVisualState(state);
                 });
@@ -212,7 +212,7 @@ public class OrbOverlayHandler : IOrbOverlayHandler, IDisposable
 
             var oldPosition = new System.Drawing.Point((int)_orbWindow.Left, (int)_orbWindow.Top);
 
-            await Application.Current.Dispatcher.InvokeAsync(() =>
+            await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
             {
                 _orbWindow.Left = position.X;
                 _orbWindow.Top = position.Y;
@@ -226,8 +226,8 @@ public class OrbOverlayHandler : IOrbOverlayHandler, IDisposable
             // Fire position changed event
             PositionChanged?.Invoke(this, new OrbPositionChangedEventArgs
             {
-                OldPosition = new System.Windows.Point(oldPosition.X, oldPosition.Y),
-                NewPosition = new System.Windows.Point(position.X, position.Y)
+                OldPosition = new System.Drawing.Point((int)oldPosition.X, (int)oldPosition.Y), // INFERRED: Convert to System.Drawing.Point with explicit cast
+                NewPosition = new System.Drawing.Point((int)position.X, (int)position.Y) // INFERRED: Convert to System.Drawing.Point with explicit cast
             });
 
             _logger.LogDebug("Orb position updated - Cosmic coordinates adjusted! 📍");
@@ -251,7 +251,7 @@ public class OrbOverlayHandler : IOrbOverlayHandler, IDisposable
 
             if (_orbWindow != null)
             {
-                await Application.Current.Dispatcher.InvokeAsync(() =>
+                await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     displayInfo.Position = new System.Drawing.Point((int)_orbWindow.Left, (int)_orbWindow.Top);
                     displayInfo.IsVisible = _orbWindow.IsVisible;
@@ -279,7 +279,7 @@ public class OrbOverlayHandler : IOrbOverlayHandler, IDisposable
         {
             if (_orbWindow != null)
             {
-                await Application.Current.Dispatcher.InvokeAsync(() =>
+                await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     if (enabled)
                     {
@@ -321,7 +321,7 @@ public class OrbOverlayHandler : IOrbOverlayHandler, IDisposable
             OrbClicked?.Invoke(this, new OrbClickEventArgs
             {
                 ClickPosition = new System.Drawing.Point((int)_orbWindow!.Left, (int)_orbWindow.Top),
-                Button = MouseButton.Left,
+                Button = NetToolkit.Modules.AiOrb.Models.MouseButton.Left,
                 ClickCount = 1
             });
 
@@ -347,7 +347,7 @@ public class OrbOverlayHandler : IOrbOverlayHandler, IDisposable
             OrbClicked?.Invoke(this, new OrbClickEventArgs
             {
                 ClickPosition = new System.Drawing.Point((int)_orbWindow!.Left, (int)_orbWindow.Top),
-                Button = MouseButton.Right,
+                Button = NetToolkit.Modules.AiOrb.Models.MouseButton.Right,
                 ClickCount = 1
             });
 
@@ -372,7 +372,7 @@ public class OrbOverlayHandler : IOrbOverlayHandler, IDisposable
             OrbClicked?.Invoke(this, new OrbClickEventArgs
             {
                 ClickPosition = new System.Drawing.Point((int)_orbWindow!.Left, (int)_orbWindow.Top),
-                Button = MouseButton.Middle,
+                Button = NetToolkit.Modules.AiOrb.Models.MouseButton.Middle,
                 ClickCount = 1
             });
 
@@ -617,7 +617,7 @@ public class OrbOverlayHandler : IOrbOverlayHandler, IDisposable
             OrbClicked?.Invoke(this, new OrbClickEventArgs
             {
                 ClickPosition = new System.Drawing.Point((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y),
-                Button = MouseButton.Left,
+                Button = NetToolkit.Modules.AiOrb.Models.MouseButton.Left,
                 ClickCount = e.ClickCount
             });
         }
@@ -681,7 +681,7 @@ public class OrbOverlayHandler : IOrbOverlayHandler, IDisposable
 
             if (_orbWindow != null)
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
                 {
                     _orbWindow.Close();
                     _orbWindow = null;

@@ -123,11 +123,11 @@ public class AiOrbService : IAiOrbService, IOrbEventPublisher
     /// </summary>
     public async Task<OcrAnalysisResult> OcrAnalyzeAsync(byte[] screenshot, OcrAnalysisType analysisType = OcrAnalysisType.General)
     {
+        var startTime = DateTime.UtcNow; // INFERRED: Move outside try block for catch block access
+        
         try
         {
             await EnsureInitializedAsync();
-
-            var startTime = DateTime.UtcNow;
 
             // Extract text using OCR
             var ocrResult = await _ocrProcessor.ExtractTextAsync(screenshot);

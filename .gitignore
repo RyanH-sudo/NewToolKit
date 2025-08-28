@@ -268,5 +268,25 @@ Thumbs.db
 **/packages/*
 !**/packages/build/
 
-# Local prompts folder (not for repository)
+# Local prompts folder (not for repository)  
 prompts/
+
+# Temporary debugging files and reports (but keep README.md)
+COMPLETE-*.md
+GENIUS-*.md
+ONGOING-*.md
+SYSTEMATIC-*.md
+GROK-*.md
+*.txt
+*.png
+NUL
+rename_images*.ps1
+
+# Keep important documentation
+!README.md
+!CHANGELOG.md
+!CONTRIBUTING.md
+!LICENSE.md
+
+# Images and videos directory (too large for git)
+images-videos/

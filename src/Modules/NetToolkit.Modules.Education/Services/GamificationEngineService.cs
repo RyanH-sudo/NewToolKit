@@ -6,6 +6,7 @@ using NetToolkit.Modules.Education.Data;
 using NetToolkit.Modules.Education.Interfaces;
 using NetToolkit.Modules.Education.Models;
 using Polly;
+using Polly.Retry;
 
 namespace NetToolkit.Modules.Education.Services;
 
@@ -18,7 +19,7 @@ public class GamificationEngineService : IGamificationEngine
     private readonly EducationDbContext _dbContext;
     private readonly IEventBus _eventBus;
     private readonly ILogger<GamificationEngineService> _logger;
-    private readonly IAsyncPolicy _retryPolicy;
+    private readonly ResiliencePipeline _retryPolicy;
 
     // Badge thresholds and configurations
     private static readonly Dictionary<string, Func<string, Achievement, bool>> BadgeCriteria = new()
@@ -208,17 +209,16 @@ public class GamificationEngineService : IGamificationEngine
         _eventBus = eventBus;
         _logger = logger;
         
-        // Configure resilience policy
-        _retryPolicy = Policy
-            .Handle<Exception>()
-            .WaitAndRetryAsync(
-                retryCount: 3,
-                sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
-                onRetry: (outcome, timespan, retryCount, context) =>
-                {
-                    _logger.LogWarning("Retry {RetryCount} for gamification operation after {Delay}ms: {Exception}",
-                        retryCount, timespan.TotalMilliseconds, outcome.Exception?.Message);
-                });
+        // Configure resilience policy (INFERRED: Polly v8 ResiliencePipeline)
+        _retryPolicy = new ResiliencePipelineBuilder()
+            .AddRetry(new RetryStrategyOptions
+            {
+                MaxRetryAttempts = 3,
+                BackoffType = DelayBackoffType.Exponential,
+                Delay = TimeSpan.FromSeconds(1),
+                MaxDelay = TimeSpan.FromSeconds(30)
+            })
+            .Build();
     }
 
     /// <summary>
@@ -231,8 +231,6 @@ public class GamificationEngineService : IGamificationEngine
     {
         try
         {
-            _logger.LogDebug("🧮 Calculating cosmic quiz score with {AnswerCount} answers in {TimeSpent}s...", 
-                answers.Count, timeSpentSeconds);
 
             var totalQuestions = correctAnswers.Count;
             var correctCount = 0;
@@ -269,7 +267,7 @@ public class GamificationEngineService : IGamificationEngine
                 BonusPoints = bonusPoints
             };
 
-            _logger.LogInformation("🎯 Quiz score calculated: {Score}% ({Correct}/{Total}) with {Bonus} bonus points - {Feedback}", 
+            _logger.LogDebug("Quiz score calculated: {Score}% ({Correct}/{Total}) with {Bonus} bonus points", 
                 percentage, correctCount, totalQuestions, bonusPoints, result.WittyFeedback);
 
             return result;
@@ -299,10 +297,8 @@ public class GamificationEngineService : IGamificationEngine
     {
         try
         {
-            return await _retryPolicy.ExecuteAsync(async () =>
+            return await _retryPolicy.ExecuteAsync(async (context) =>
             {
-                _logger.LogDebug("🏆 Evaluating badge awards for user {UserId} with achievement {Type}...", 
-                    userId, achievement.Type);
 
                 var newBadges = new List<Badge>();
                 
@@ -320,7 +316,7 @@ public class GamificationEngineService : IGamificationEngine
                 // Check each badge criteria
                 foreach (var badge in availableBadges.Where(b => !earnedBadgeIds.Contains(b.Id)))
                 {
-                    if (BadgeCriteria.TryGetValue(badge.Id, out var criteria) && criteria(userId, achievement))
+                    if (BadgeCriteria.TryGetValue(badge.BadgeId, out var criteria) && criteria(userId, achievement))
                     {
                         // Special case for badges that require multiple achievements
                         if (await CheckSpecialBadgeCriteriaAsync(userId, badge, achievement, cancellationToken))
@@ -359,27 +355,27 @@ public class GamificationEngineService : IGamificationEngine
     {
         try
         {
-            return await _retryPolicy.ExecuteAsync(async () =>
+            return await _retryPolicy.ExecuteAsync(async (context) =>
             {
-                _logger.LogDebug("🔥 Updating learning streak for user {UserId} on {Date}...", userId, activityDate.Date);
 
                 // Get or create user streak record
-                var streakRecord = await _dbContext.UserStreaks
-                    .FirstOrDefaultAsync(us => us.UserId == userId, cancellationToken)
-                    ?? new UserStreak { UserId = userId };
+                var existingStreak = await _dbContext.UserStreaks
+                    .FirstOrDefaultAsync(us => us.UserId == userId, cancellationToken);
+                var streakRecord = existingStreak is null ? 
+                    new NetToolkit.Modules.Education.Models.UserStreak { UserId = userId, LastActivityDate = DateTime.UtcNow } : 
+                    existingStreak;
 
                 var today = activityDate.Date;
                 var yesterday = today.AddDays(-1);
                 
                 // Calculate streak based on activity pattern
-                if (streakRecord.LastActivityDate.HasValue)
+                if (streakRecord.LastActivityDate != DateTime.MinValue)
                 {
-                    var lastActivity = streakRecord.LastActivityDate.Value.Date;
+                    var lastActivity = streakRecord.LastActivityDate.Date;
                     
                     if (lastActivity == today)
                     {
                         // Already counted for today, no change
-                        _logger.LogDebug("📅 Activity already recorded for today, streak unchanged");
                     }
                     else if (lastActivity == yesterday)
                     {
@@ -392,7 +388,7 @@ public class GamificationEngineService : IGamificationEngine
                             streakRecord.LongestStreak = streakRecord.CurrentStreak;
                         }
                         
-                        _logger.LogInformation("🚀 Streak increased to {Streak} days for user {UserId}!", 
+                        _logger.LogDebug("Streak increased to {Streak} days for user {UserId}", 
                             streakRecord.CurrentStreak, userId);
                     }
                     else if (lastActivity < yesterday)
@@ -431,9 +427,9 @@ public class GamificationEngineService : IGamificationEngine
                 {
                     CurrentStreak = streakRecord.CurrentStreak,
                     LongestStreak = streakRecord.LongestStreak,
-                    LastActivity = streakRecord.LastActivityDate ?? today,
+                    LastActivity = streakRecord.LastActivityDate,
                     StreakStartDate = streakRecord.StreakStartDate,
-                    IsActive = streakRecord.LastActivityDate?.Date == today,
+                    IsActive = streakRecord.LastActivityDate.Date == today,
                     ActivityDates = await GetRecentActivityDatesAsync(userId, cancellationToken)
                 };
 
@@ -466,7 +462,6 @@ public class GamificationEngineService : IGamificationEngine
     {
         try
         {
-            _logger.LogDebug("💪 Generating cosmic motivation for user progress...");
 
             var completionPercentage = userProgress.CompletionPercentage;
             var streak = await UpdateStreakAsync(userProgress.UserId, DateTime.UtcNow);
@@ -474,7 +469,6 @@ public class GamificationEngineService : IGamificationEngine
             var motivationType = DetermineMotivationType(completionPercentage, streak, recentActivity);
             var message = GenerateMotivationMessage(motivationType, completionPercentage, streak, recentActivity);
 
-            _logger.LogDebug("✨ Generated motivation message: {Message}", message.GetFullMessage());
 
             return message;
         }
@@ -501,9 +495,8 @@ public class GamificationEngineService : IGamificationEngine
     {
         try
         {
-            return await _retryPolicy.ExecuteAsync(async () =>
+            return await _retryPolicy.ExecuteAsync(async (context) =>
             {
-                _logger.LogDebug("👑 Calculating cosmic learning rank for user {UserId}...", userId);
 
                 // Get user's learning statistics
                 var moduleProgresses = await _dbContext.ModuleProgress
@@ -571,9 +564,8 @@ public class GamificationEngineService : IGamificationEngine
     {
         try
         {
-            return await _retryPolicy.ExecuteAsync(async () =>
+            return await _retryPolicy.ExecuteAsync(async (context) =>
             {
-                _logger.LogDebug("📊 Generating cosmic leaderboard for {Timeframe} with limit {Limit}...", timeframe, limit);
 
                 var query = _dbContext.ModuleProgress
                     .Include(mp => mp.LessonProgresses)
@@ -632,7 +624,6 @@ public class GamificationEngineService : IGamificationEngine
                     });
                 }
 
-                _logger.LogDebug("🏆 Generated leaderboard with {EntryCount} cosmic achievers!", leaderboard.Count);
 
                 return leaderboard;
             });
@@ -653,9 +644,8 @@ public class GamificationEngineService : IGamificationEngine
     {
         try
         {
-            return await _retryPolicy.ExecuteAsync(async () =>
+            return await _retryPolicy.ExecuteAsync(async (context) =>
             {
-                _logger.LogDebug("🔍 Analyzing cosmic learning patterns for user {UserId}...", userId);
 
                 var lessonProgresses = await _dbContext.LessonProgress
                     .Include(lp => lp.Lesson)
@@ -702,7 +692,6 @@ public class GamificationEngineService : IGamificationEngine
     {
         try
         {
-            _logger.LogDebug("🎯 Checking milestone '{MilestoneName}' for user {UserId}...", milestone.Name, userId);
 
             var currentValue = await GetMilestoneCurrentValueAsync(userId, milestone, cancellationToken);
             var achieved = currentValue >= milestone.TargetValue;
@@ -747,7 +736,6 @@ public class GamificationEngineService : IGamificationEngine
     {
         try
         {
-            _logger.LogDebug("🎮 Generating cosmic daily challenges for user {UserId} at {Difficulty} level...", userId, difficulty);
 
             var challenges = new List<DailyChallenge>();
             var random = new Random();
@@ -799,12 +787,13 @@ public class GamificationEngineService : IGamificationEngine
     {
         try
         {
-            _logger.LogDebug("📊 Tracking engagement for user {UserId} - activity: {ActivityType}...", userId, engagementData.ActivityType);
 
             // Get or create engagement profile
-            var profile = await _dbContext.UserEngagementProfiles
-                .FirstOrDefaultAsync(uep => uep.UserId == userId, cancellationToken)
-                ?? new UserEngagementProfile { UserId = userId };
+            var existingProfile = await _dbContext.UserEngagementProfiles
+                .FirstOrDefaultAsync(uep => uep.UserId == userId, cancellationToken);
+            var profile = existingProfile is null ? 
+                new NetToolkit.Modules.Education.Models.UserEngagementProfile { UserId = userId } : 
+                existingProfile;
 
             // Update engagement metrics
             UpdateEngagementMetrics(profile, engagementData);
@@ -834,8 +823,6 @@ public class GamificationEngineService : IGamificationEngine
                 OptimizationTips = GenerateOptimizationTips(profile)
             };
 
-            _logger.LogDebug("📈 Engagement profile updated for user {UserId}: Level {Level}, Attention {Attention:F1}", 
-                userId, profile.Level, profile.AttentionScore);
 
             return engagementProfile;
         }
@@ -957,7 +944,7 @@ public class GamificationEngineService : IGamificationEngine
 
     private async Task<bool> CheckSpecialBadgeCriteriaAsync(string userId, Badge badge, Achievement achievement, CancellationToken cancellationToken)
     {
-        return badge.Id switch
+        return badge.BadgeId switch
         {
             // Module 1 special badges
             "basics_boss" => await CheckBasicsBossEligibilityAsync(userId, cancellationToken),
@@ -1074,7 +1061,7 @@ public class GamificationEngineService : IGamificationEngine
             UserId = userId,
             BadgeName = badge.Name,
             BadgeDescription = badge.Description,
-            BadgeRarity = badge.Rarity.ToString(),
+            Rarity = badge.Rarity,
             AwardedAt = userBadge.AwardedAt
         }, cancellationToken);
 
@@ -1224,18 +1211,18 @@ public class GamificationEngineService : IGamificationEngine
     private DailyChallenge GenerateDailyChallenge(ChallengeType type, DifficultyLevel difficulty, List<LessonProgress> recent) => 
         new() { Id = Guid.NewGuid().ToString(), Title = $"{type} Challenge", Type = type, Difficulty = difficulty };
     
-    private void UpdateEngagementMetrics(UserEngagementProfile profile, EngagementData data)
+    private void UpdateEngagementMetrics(NetToolkit.Modules.Education.Models.UserEngagementProfile profile, EngagementData data)
     {
         profile.TotalActivities++;
         profile.LastActivity = DateTime.UtcNow;
         profile.AttentionScore = (profile.AttentionScore + data.FocusScore) / 2;
     }
 
-    private EngagementLevel CalculateEngagementLevel(UserEngagementProfile profile) => 
+    private EngagementLevel CalculateEngagementLevel(NetToolkit.Modules.Education.Models.UserEngagementProfile profile) => 
         profile.AttentionScore > 0.8 ? EngagementLevel.Highly : EngagementLevel.Moderate;
     
     private Dictionary<string, double> DeserializeFeaturePreferences(string json) => new();
-    private List<string> GenerateOptimizationTips(UserEngagementProfile profile) => 
+    private List<string> GenerateOptimizationTips(NetToolkit.Modules.Education.Models.UserEngagementProfile profile) => 
         new() { "Keep up the great learning momentum!" };
 
     private async Task<bool> CheckWirelessWonderWizardEligibilityAsync(string userId, CancellationToken cancellationToken)

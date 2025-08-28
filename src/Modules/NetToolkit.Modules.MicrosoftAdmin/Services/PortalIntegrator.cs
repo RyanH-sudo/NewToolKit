@@ -6,6 +6,7 @@ using NetToolkit.Modules.MicrosoftAdmin.Models;
 using System.Text.Json;
 using System.Web;
 using System.Net.Http;
+using System.IO; // INFERRED: For Path class
 
 namespace NetToolkit.Modules.MicrosoftAdmin.Services;
 
@@ -557,7 +558,7 @@ public class PortalIntegrator : IPortalIntegrator
         {
             _logger.LogInformation("Creating WebView2 environment for portal integration");
             
-            var options = CoreWebView2EnvironmentOptions.CreateDefault();
+            var options = new CoreWebView2EnvironmentOptions();
             
             // Configure for admin portal compatibility
             options.AdditionalBrowserArguments = 

@@ -60,4 +60,31 @@ public static class Module10ContentSeed
 
         return lessons;
     }
+
+    public static Module GetModule10Content()
+    {
+        return new Module
+        {
+            Id = 10,
+            Title = "Network Mastery & Future Technologies",
+            Description = "Achieve network mastery and explore emerging technologies",
+            Category = "Mastery",
+            Difficulty = DifficultyLevel.Expert,
+            EstimatedMinutes = 800,
+            Prerequisites = "Complete Module 9: Protocol Alchemy & Integration",
+            LearningOutcomes = "Students will demonstrate complete network mastery, explore emerging technologies, and architect next-generation network solutions",
+            LearningObjectives = new List<string> { "Demonstrate comprehensive network mastery", "Explore emerging networking technologies", "Design next-generation network architectures" },
+            Tags = new List<string> { "mastery", "future-tech", "innovation", "expert" },
+            Lessons = GetModule10Lessons(),
+            CreatedAt = DateTime.UtcNow
+        };
+    }
+
+    public static List<Badge> GetModule10Badges()
+    {
+        return new List<Badge>
+        {
+            new Badge { BadgeId = "network_grand_master", Name = "Network Grand Master", Description = "Successfully completed Network Mastery & Future Technologies module", Category = BadgeCategory.Special, Rarity = BadgeRarity.Legendary, Requirements = "Complete all lessons in Module 10", RewardMessage = "👑 You are the ultimate Network Grand Master!", CreatedAt = DateTime.UtcNow }
+        };
+    }
 }

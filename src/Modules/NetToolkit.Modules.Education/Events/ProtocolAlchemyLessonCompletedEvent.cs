@@ -100,4 +100,14 @@ public class ProtocolAlchemyLessonCompletedEvent
     /// Witty alchemical feedback message for the achievement
     /// </summary>
     public string AlchemicalFeedback { get; init; } = string.Empty;
+
+    /// <summary>
+    /// Performance metrics for protocol mixing operations
+    /// </summary>
+    public Dictionary<string, double> PerformanceMetrics { get; init; } = new();
+
+    /// <summary>
+    /// Interoperability features unlocked for protocol combinations
+    /// </summary>
+    public List<string> InteroperabilityFeatures { get; init; } = new();
 }

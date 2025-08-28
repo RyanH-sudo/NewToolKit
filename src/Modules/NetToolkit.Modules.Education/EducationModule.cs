@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using NetToolkit.Core.Events;
 using NetToolkit.Core.Interfaces;
 using NetToolkit.Modules.Education.Data;
+using NetToolkit.Modules.Education.Events;
 using NetToolkit.Modules.Education.Interfaces;
 using NetToolkit.Modules.Education.Models;
 using NetToolkit.Modules.Education.Services;
@@ -50,7 +51,7 @@ public class EducationModule : IModule, IHostedService
     {
         try
         {
-            _logger.LogInformation("🎓 Initializing Cosmic Education Platform Module - awakening the learning cosmos...");
+            _logger.LogInformation("Initializing Education Platform Module...");
 
             // Create service scope for initialization
             _serviceScope = _serviceProvider.CreateScope();
@@ -66,11 +67,11 @@ public class EducationModule : IModule, IHostedService
             // Register education-specific event handlers
             RegisterEducationEventHandlers();
 
-            _logger.LogInformation("✨ Education Platform Module initialized successfully - cosmic learning academy is now operational!");
+            _logger.LogInformation("Education Platform Module initialized successfully");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "💥 Failed to initialize Education Platform Module - cosmic initialization disruption!");
+            _logger.LogError(ex, "Failed to initialize Education Platform Module");
             throw;
         }
     }
@@ -80,7 +81,7 @@ public class EducationModule : IModule, IHostedService
     /// </summary>
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("🚀 Starting Education Platform Module hosted service...");
+        _logger.LogDebug("Starting Education Platform Module hosted service...");
         
         try
         {
@@ -89,11 +90,11 @@ public class EducationModule : IModule, IHostedService
             // Perform any startup-specific tasks
             await PerformStartupTasksAsync(cancellationToken);
             
-            _logger.LogInformation("🎯 Education Platform Module started successfully - ready to enlighten minds!");
+            _logger.LogInformation("Education Platform Module started successfully");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "❌ Failed to start Education Platform Module - cosmic startup malfunction!");
+            _logger.LogError(ex, "Failed to start Education Platform Module");
             throw;
         }
     }
@@ -103,7 +104,7 @@ public class EducationModule : IModule, IHostedService
     /// </summary>
     public async Task StopAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("🛑 Stopping Education Platform Module...");
+        _logger.LogDebug("Stopping Education Platform Module...");
         
         try
         {
@@ -113,11 +114,11 @@ public class EducationModule : IModule, IHostedService
             // Dispose service scope
             _serviceScope?.Dispose();
             
-            _logger.LogInformation("✅ Education Platform Module stopped gracefully - cosmic knowledge preserved!");
+            _logger.LogInformation("Education Platform Module stopped gracefully");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "⚠️ Error during Education Platform Module shutdown - but the cosmic wisdom lives on!");
+            _logger.LogError(ex, "Error during Education Platform Module shutdown");
         }
     }
 
@@ -126,7 +127,6 @@ public class EducationModule : IModule, IHostedService
     /// </summary>
     public void ConfigureServices(IServiceCollection services)
     {
-        _logger.LogDebug("🔧 Configuring cosmic education services...");
 
         // Register database context with SQLite
         services.AddDbContext<EducationDbContext>(options =>
@@ -156,7 +156,6 @@ public class EducationModule : IModule, IHostedService
         services.AddSingleton<IModule>(this);
         services.AddHostedService<EducationModule>(provider => this);
 
-        _logger.LogDebug("✨ Cosmic education services registered successfully!");
     }
 
     /// <summary>
@@ -230,16 +229,14 @@ public class EducationModule : IModule, IHostedService
     /// </summary>
     public void Dispose()
     {
-        _logger.LogDebug("🧹 Disposing Education Platform Module resources...");
         
         try
         {
             _serviceScope?.Dispose();
-            _logger.LogDebug("✅ Education Platform Module resources disposed - cosmic cleanup complete!");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "⚠️ Error during Education Platform Module disposal");
+            _logger.LogError(ex, "Error during Education Platform Module disposal");
         }
     }
 
@@ -252,7 +249,6 @@ public class EducationModule : IModule, IHostedService
     {
         try
         {
-            _logger.LogDebug("🔗 Subscribing to cross-module events for cosmic integration...");
 
             // Subscribe to PowerShell Terminal events
             await _eventBus.SubscribeAsync<object>("PowerShell.ScriptExecuted", OnPowerShellScriptExecuted);
@@ -274,11 +270,10 @@ public class EducationModule : IModule, IHostedService
             await _eventBus.SubscribeAsync<object>("AI.QueryReceived", OnAIQueryReceived);
             await _eventBus.SubscribeAsync<object>("AI.ResponseGenerated", OnAIResponseGenerated);
 
-            _logger.LogDebug("✅ Successfully subscribed to cross-module events - cosmic network established!");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "❌ Failed to subscribe to cross-module events - cosmic communication disrupted!");
+            _logger.LogError(ex, "Failed to subscribe to cross-module events");
         }
     }
 
@@ -289,7 +284,6 @@ public class EducationModule : IModule, IHostedService
     {
         try
         {
-            _logger.LogDebug("📋 Registering education-specific event handlers...");
 
             // Register lesson completion handler
             _eventBus.SubscribeAsync<LessonCompletedEvent>("Education.LessonCompleted", OnLessonCompleted);
@@ -303,11 +297,10 @@ public class EducationModule : IModule, IHostedService
             // Register module started handler
             _eventBus.SubscribeAsync<ModuleStartedEvent>("Education.ModuleStarted", OnModuleStarted);
 
-            _logger.LogDebug("✅ Education event handlers registered successfully!");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "❌ Failed to register education event handlers");
+            _logger.LogError(ex, "Failed to register education event handlers");
         }
     }
 
@@ -318,11 +311,10 @@ public class EducationModule : IModule, IHostedService
     {
         try
         {
-            _logger.LogDebug("🎯 Performing education module startup tasks...");
 
             if (_serviceScope == null)
             {
-                _logger.LogWarning("⚠️ Service scope not available for startup tasks");
+                _logger.LogWarning("Service scope not available for startup tasks");
                 return;
             }
 
@@ -340,13 +332,13 @@ public class EducationModule : IModule, IHostedService
             foreach (var module in modules)
             {
                 availableModules++;
-                _logger.LogInformation("✅ Module {ModuleId} validated: '{Title}' with {LessonCount} lessons ready for cosmic learning!", 
+                _logger.LogDebug("Module {ModuleId} validated: '{Title}' with {LessonCount} lessons", 
                     module.Id, module.Title, module.Lessons.Count);
             }
             
             if (availableModules == 0)
             {
-                _logger.LogWarning("⚠️ No modules found - content may need re-seeding");
+                _logger.LogWarning("No modules found - content may need re-seeding");
             }
 
             // Publish module ready event
@@ -358,11 +350,10 @@ public class EducationModule : IModule, IHostedService
                 ReadyAt = DateTime.UtcNow
             }, cancellationToken);
 
-            _logger.LogDebug("✨ Education module startup tasks completed successfully!");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "❌ Error during education module startup tasks");
+            _logger.LogError(ex, "Error during education module startup tasks");
         }
     }
 
@@ -373,31 +364,29 @@ public class EducationModule : IModule, IHostedService
     {
         try
         {
-            _logger.LogDebug("🔌 Unsubscribing from events during shutdown...");
 
-            // Unsubscribe from cross-module events
-            await _eventBus.UnsubscribeAsync("PowerShell.ScriptExecuted", OnPowerShellScriptExecuted);
-            await _eventBus.UnsubscribeAsync("PowerShell.CommandCompleted", OnPowerShellCommandCompleted);
-            await _eventBus.UnsubscribeAsync("PortScanner.ScanCompleted", OnPortScanCompleted);
-            await _eventBus.UnsubscribeAsync("NetworkTopology.Generated", OnNetworkTopologyGenerated);
-            await _eventBus.UnsubscribeAsync("SecurityScanner.VulnerabilityFound", OnSecurityVulnerabilityFound);
-            await _eventBus.UnsubscribeAsync("SecurityScanner.ScanCompleted", OnSecurityScanCompleted);
-            await _eventBus.UnsubscribeAsync("SSH.ConnectionEstablished", OnSSHConnectionEstablished);
-            await _eventBus.UnsubscribeAsync("SSH.CommandExecuted", OnSSHCommandExecuted);
-            await _eventBus.UnsubscribeAsync("AI.QueryReceived", OnAIQueryReceived);
-            await _eventBus.UnsubscribeAsync("AI.ResponseGenerated", OnAIResponseGenerated);
+            // Unsubscribe from cross-module events (INFERRED: Generic type explicit for cross-module compatibility)
+            await _eventBus.UnsubscribeAsync<object>("PowerShell.ScriptExecuted", OnPowerShellScriptExecuted);
+            await _eventBus.UnsubscribeAsync<object>("PowerShell.CommandCompleted", OnPowerShellCommandCompleted);
+            await _eventBus.UnsubscribeAsync<object>("PortScanner.ScanCompleted", OnPortScanCompleted);
+            await _eventBus.UnsubscribeAsync<object>("NetworkTopology.Generated", OnNetworkTopologyGenerated);
+            await _eventBus.UnsubscribeAsync<object>("SecurityScanner.VulnerabilityFound", OnSecurityVulnerabilityFound);
+            await _eventBus.UnsubscribeAsync<object>("SecurityScanner.ScanCompleted", OnSecurityScanCompleted);
+            await _eventBus.UnsubscribeAsync<object>("SSH.ConnectionEstablished", OnSSHConnectionEstablished);
+            await _eventBus.UnsubscribeAsync<object>("SSH.CommandExecuted", OnSSHCommandExecuted);
+            await _eventBus.UnsubscribeAsync<object>("AI.QueryReceived", OnAIQueryReceived);
+            await _eventBus.UnsubscribeAsync<object>("AI.ResponseGenerated", OnAIResponseGenerated);
 
-            // Unsubscribe from education events
-            await _eventBus.UnsubscribeAsync("Education.LessonCompleted", OnLessonCompleted);
-            await _eventBus.UnsubscribeAsync("Education.QuizPassed", OnQuizPassed);
-            await _eventBus.UnsubscribeAsync("Education.BadgeUnlocked", OnBadgeUnlocked);
-            await _eventBus.UnsubscribeAsync("Education.ModuleStarted", OnModuleStarted);
+            // Unsubscribe from education events (INFERRED: Specific event types for proper handler matching)
+            await _eventBus.UnsubscribeAsync<LessonCompletedEvent>("Education.LessonCompleted", OnLessonCompleted);
+            await _eventBus.UnsubscribeAsync<QuizPassedEvent>("Education.QuizPassed", OnQuizPassed);
+            await _eventBus.UnsubscribeAsync<BadgeUnlockedEvent>("Education.BadgeUnlocked", OnBadgeUnlocked);
+            await _eventBus.UnsubscribeAsync<ModuleStartedEvent>("Education.ModuleStarted", OnModuleStarted);
 
-            _logger.LogDebug("✅ Successfully unsubscribed from all events");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "❌ Error during event unsubscription");
+            _logger.LogError(ex, "Error during event unsubscription");
         }
     }
 
@@ -412,7 +401,6 @@ public class EducationModule : IModule, IHostedService
     {
         try
         {
-            _logger.LogDebug("🔗 PowerShell script executed - checking for education integration opportunities...");
 
             // If user executed networking commands, suggest related lessons
             var scriptData = eventData.ToString()?.ToLowerInvariant() ?? "";
@@ -427,7 +415,7 @@ public class EducationModule : IModule, IHostedService
                     Priority = "Medium"
                 });
                 
-                _logger.LogInformation("💡 Suggested networking lessons based on PowerShell activity!");
+                _logger.LogDebug("Suggested networking lessons based on PowerShell activity");
             }
             else if (scriptData.Contains("get-netadapter") || scriptData.Contains("get-netipinterface"))
             {
@@ -439,12 +427,12 @@ public class EducationModule : IModule, IHostedService
                     Priority = "High"
                 });
                 
-                _logger.LogInformation("🦸‍♂️ Suggested Hardware Heroes lessons based on NIC command activity!");
+                _logger.LogDebug("Suggested Hardware Heroes lessons based on NIC command activity");
             }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "❌ Error handling PowerShell script execution event");
+            _logger.LogError(ex, "Error handling PowerShell script execution event");
         }
     }
 
@@ -453,7 +441,6 @@ public class EducationModule : IModule, IHostedService
     /// </summary>
     private async Task OnPowerShellCommandCompleted(object eventData)
     {
-        _logger.LogDebug("📝 PowerShell command completed - logging for learning analytics");
         
         // Track command usage for learning recommendations
         // Implementation details would depend on the event data structure
@@ -466,7 +453,6 @@ public class EducationModule : IModule, IHostedService
     {
         try
         {
-            _logger.LogDebug("🔍 Port scan completed - suggesting network security lessons...");
 
             await _eventBus.PublishAsync(new LearningOpportunityEvent
             {
@@ -497,7 +483,6 @@ public class EducationModule : IModule, IHostedService
     {
         try
         {
-            _logger.LogDebug("🌐 Network topology generated - suggesting topology lessons...");
 
             await _eventBus.PublishAsync(new LearningOpportunityEvent
             {
@@ -528,7 +513,6 @@ public class EducationModule : IModule, IHostedService
     {
         try
         {
-            _logger.LogDebug("🚨 Security vulnerability found - suggesting security education...");
 
             await _eventBus.PublishAsync(new LearningOpportunityEvent
             {
@@ -551,7 +535,6 @@ public class EducationModule : IModule, IHostedService
     /// </summary>
     private async Task OnSecurityScanCompleted(object eventData)
     {
-        _logger.LogDebug("🛡️ Security scan completed - tracking for security education metrics");
         // Implementation for security scan completion
     }
 
@@ -562,7 +545,6 @@ public class EducationModule : IModule, IHostedService
     {
         try
         {
-            _logger.LogDebug("🔐 SSH connection established - suggesting security best practices...");
 
             await _eventBus.PublishAsync(new LearningOpportunityEvent
             {
@@ -583,7 +565,6 @@ public class EducationModule : IModule, IHostedService
     /// </summary>
     private async Task OnSSHCommandExecuted(object eventData)
     {
-        _logger.LogDebug("💻 SSH command executed - logging for advanced learning analytics");
         // Track SSH command patterns for advanced lesson recommendations
     }
 
@@ -592,7 +573,6 @@ public class EducationModule : IModule, IHostedService
     /// </summary>
     private async Task OnAIQueryReceived(object eventData)
     {
-        _logger.LogDebug("🤖 AI query received - analyzing for educational content gaps");
         // Analyze AI queries to identify knowledge gaps and suggest lessons
     }
 
@@ -601,7 +581,6 @@ public class EducationModule : IModule, IHostedService
     /// </summary>
     private async Task OnAIResponseGenerated(object eventData)
     {
-        _logger.LogDebug("✨ AI response generated - checking for learning enhancement opportunities");
         // Check if AI responses can be enhanced with educational content
     }
 

@@ -339,7 +339,7 @@ public class TerminalEventPublisherTests
             ScriptContent = "Write-Output 'Hello World'"
         };
         
-        _mockEventBus.Setup(x => x.PublishAsync(It.IsAny<ScriptExecutionStartedEvent>()))
+        _mockEventBus.Setup(x => x.PublishAsync(It.IsAny<ScriptExecutionStartedEvent>(), It.IsAny<CancellationToken>()))
                     .Returns(Task.CompletedTask);
         
         // Act
@@ -347,7 +347,7 @@ public class TerminalEventPublisherTests
         
         // Assert - verifying our digital messenger delivered the news
         _mockEventBus.Verify(x => x.PublishAsync(It.Is<ScriptExecutionStartedEvent>(e => 
-            e.ScriptId == "test-123" && e.ScriptName == "Test Script")), Times.Once);
+            e.ScriptId == "test-123" && e.ScriptName == "Test Script"), It.IsAny<CancellationToken>()), Times.Once);
     }
     
     [Fact]
@@ -362,7 +362,7 @@ public class TerminalEventPublisherTests
             Duration = TimeSpan.FromSeconds(2)
         };
         
-        _mockEventBus.Setup(x => x.PublishAsync(It.IsAny<ScriptExecutionCompletedEvent>()))
+        _mockEventBus.Setup(x => x.PublishAsync(It.IsAny<ScriptExecutionCompletedEvent>(), It.IsAny<CancellationToken>()))
                     .Returns(Task.CompletedTask);
         
         // Act
@@ -370,7 +370,7 @@ public class TerminalEventPublisherTests
         
         // Assert
         _mockEventBus.Verify(x => x.PublishAsync(It.Is<ScriptExecutionCompletedEvent>(e => 
-            e.Success == true && e.Duration.TotalSeconds == 2)), Times.Once);
+            e.Success == true && e.Duration.TotalSeconds == 2), It.IsAny<CancellationToken>()), Times.Once);
         
         // Verify the witty message generation
         var wittyMessage = eventData.GetWittyStatusMessage();
@@ -388,7 +388,7 @@ public class TerminalEventPublisherTests
             Severity = ErrorSeverity.Error
         };
         
-        _mockEventBus.Setup(x => x.PublishAsync(It.IsAny<ErrorOccurredEvent>()))
+        _mockEventBus.Setup(x => x.PublishAsync(It.IsAny<ErrorOccurredEvent>(), It.IsAny<CancellationToken>()))
                     .Returns(Task.CompletedTask);
         
         // Act
@@ -396,7 +396,7 @@ public class TerminalEventPublisherTests
         
         // Assert
         _mockEventBus.Verify(x => x.PublishAsync(It.Is<ErrorOccurredEvent>(e => 
-            e.ErrorMessage == "Command not found")), Times.Once);
+            e.ErrorMessage == "Command not found"), It.IsAny<CancellationToken>()), Times.Once);
         
         // Verify the witty error message contains humor
         var wittyMessage = eventData.GetWittyErrorMessage();

@@ -85,4 +85,9 @@ public class RoutingLessonCompletedEvent
     /// Witty routing riddle feedback message
     /// </summary>
     public string RiddleFeedback { get; init; } = string.Empty;
+
+    /// <summary>
+    /// SSH routing capabilities unlocked by this lesson (INFERRED: for SSH module integration)
+    /// </summary>
+    public List<string> SSHRoutingCapabilities { get; init; } = new();
 }

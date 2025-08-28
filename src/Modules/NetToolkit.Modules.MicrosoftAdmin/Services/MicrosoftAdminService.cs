@@ -5,10 +5,16 @@ using Microsoft.Graph;
 using NetToolkit.Core.Interfaces;
 using NetToolkit.Modules.MicrosoftAdmin.Interfaces;
 using NetToolkit.Modules.MicrosoftAdmin.Models;
+using NetToolkit.Modules.MicrosoftAdmin.Events;
 using System.Security.Cryptography;
 using System.Text;
+using System.Net.Http;
 using Microsoft.Graph.Models;
 using Polly;
+using Polly.Retry;
+using Polly.Timeout;
+// Removed: using Microsoft.Graph.Auth; - deprecated in Microsoft Graph SDK v5
+// Removed: using Polly.Extensions.DependencyInjection; - not available in Polly v8
 
 namespace NetToolkit.Modules.MicrosoftAdmin.Services;
 
@@ -25,7 +31,7 @@ public class MicrosoftAdminService : IMicrosoftAdminService
     private readonly IPortalIntegrator _portalIntegrator;
     private readonly IPublicClientApplication _msalClient;
     private readonly GraphServiceClient _graphClient;
-    private readonly ResilienceStrategy _resilienceStrategy;
+    private readonly ResiliencePipeline _resilienceStrategy;
     
     private Models.AuthenticationResult? _currentAuth;
     private readonly SemaphoreSlim _authLock = new(1, 1);
@@ -60,17 +66,9 @@ public class MicrosoftAdminService : IMicrosoftAdminService
             })
             .Build();
 
-        // Initialize Graph client with authentication provider
-        _graphClient = new GraphServiceClient(new DelegateAuthenticationProvider((requestMessage, cancellationToken) =>
-        {
-            // Add Authorization header with current token
-            if (_currentAuth?.AccessToken != null)
-            {
-                requestMessage.Headers.Authorization = 
-                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _currentAuth.AccessToken);
-            }
-            return Task.FromResult(requestMessage);
-        }));
+        // Initialize Graph client with HTTP client that handles authentication
+        var httpClient = new HttpClient();
+        _graphClient = new GraphServiceClient(httpClient);
 
         // Configure resilience strategy for Graph API calls
         _resilienceStrategy = new ResiliencePipelineBuilder()
@@ -78,7 +76,7 @@ public class MicrosoftAdminService : IMicrosoftAdminService
             {
                 MaxRetryAttempts = 3,
                 BackoffType = DelayBackoffType.Exponential,
-                BaseDelay = TimeSpan.FromSeconds(1),
+                Delay = TimeSpan.FromSeconds(1),
                 MaxDelay = TimeSpan.FromSeconds(30)
             })
             .AddTimeout(TimeSpan.FromMinutes(2))
@@ -126,7 +124,7 @@ public class MicrosoftAdminService : IMicrosoftAdminService
                 // Interactive authentication
                 var interactiveResult = await _msalClient
                     .AcquireTokenInteractive(scopes)
-                    .WithPrompt(Prompt.SelectAccount)
+                    .WithPrompt(Microsoft.Identity.Client.Prompt.SelectAccount)
                     .WithExtraQueryParameters(new Dictionary<string, string>
                     {
                         ["prompt"] = "consent"
@@ -149,7 +147,7 @@ public class MicrosoftAdminService : IMicrosoftAdminService
 
                 return authResult;
             }
-            catch (MsalException ex) when (ex.ErrorCode == MsalError.AuthenticationCanceled)
+            catch (MsalException ex) when (ex.ErrorCode == MsalError.AuthenticationCanceledError)
             {
                 _logger.LogWarning("Authentication canceled by user - admin quest abandoned");
                 return new Models.AuthenticationResult
@@ -587,7 +585,7 @@ public class MicrosoftAdminService : IMicrosoftAdminService
     {
         try
         {
-            var tempAuth = new AuthenticationResult { AccessToken = accessToken, IsSuccess = true };
+            var tempAuth = new Models.AuthenticationResult { AccessToken = accessToken, IsSuccess = true };
             var previousAuth = _currentAuth;
             _currentAuth = tempAuth;
             

@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
+using NetToolkit.Modules.Education.Interfaces;
 
 namespace NetToolkit.Modules.Education.Models;
 
@@ -53,6 +54,21 @@ public class Module
     /// Learning outcomes
     /// </summary>
     public string LearningOutcomes { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// Module category (INFERRED: for grouping modules)
+    /// </summary>
+    public string Category { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// Module learning objectives (INFERRED: detailed objectives list)
+    /// </summary>
+    public List<string> LearningObjectives { get; set; } = new List<string>();
+    
+    /// <summary>
+    /// Module tags (INFERRED: for search and filtering)
+    /// </summary>
+    public List<string> Tags { get; set; } = new List<string>();
     
     /// <summary>
     /// Creation timestamp
@@ -136,6 +152,31 @@ public class Lesson
     public int EstimatedMinutes { get; set; } = 5;
     
     /// <summary>
+    /// Lesson order/sequence (INFERRED: same as LessonNumber for compatibility)
+    /// </summary>
+    public int Order => LessonNumber;
+    
+    /// <summary>
+    /// Lesson learning objectives (INFERRED: detailed objectives list)
+    /// </summary>
+    public List<string> LearningObjectives { get; set; } = new List<string>();
+    
+    /// <summary>
+    /// Lesson content as list of strings (INFERRED: for content access, renamed for EF compatibility)
+    /// </summary>
+    public List<string> ContentStrings { get; set; } = new List<string>();
+    
+    /// <summary>
+    /// Quiz questions as list of strings (INFERRED: simplified quiz access, renamed for compatibility)
+    /// </summary>
+    public List<string> QuizQuestionStrings { get; set; } = new List<string>();
+    
+    /// <summary>
+    /// Lesson difficulty level (INFERRED: individual lesson difficulty)
+    /// </summary>
+    public string Difficulty { get; set; } = "Intermediate";
+    
+    /// <summary>
     /// Parent module
     /// </summary>
     public virtual Module Module { get; set; } = null!;
@@ -144,6 +185,16 @@ public class Lesson
     /// Lesson progress records
     /// </summary>
     public virtual ICollection<LessonProgress> Progress { get; set; } = new List<LessonProgress>();
+    
+    /// <summary>
+    /// Lesson content collection (INFERRED: EF Core navigation for HasMany relationship)
+    /// </summary>
+    public virtual ICollection<LessonContent> Content { get; set; } = new List<LessonContent>();
+    
+    /// <summary>
+    /// Quiz questions collection (INFERRED: EF Core navigation for HasMany relationship)
+    /// </summary>
+    public virtual ICollection<QuizQuestion> QuizQuestions { get; set; } = new List<QuizQuestion>();
     
     /// <summary>
     /// Deserialize lesson content
@@ -183,6 +234,36 @@ public class Lesson
 public class LessonContent
 {
     /// <summary>
+    /// Unique content identifier (INFERRED: for content management)
+    /// </summary>
+    public string Id { get; set; } = Guid.NewGuid().ToString();
+    
+    /// <summary>
+    /// Content title (INFERRED: for content organization)
+    /// </summary>
+    public string Title { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// Content data/body (INFERRED: main content)
+    /// </summary>
+    public string Data { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// Content description (INFERRED: content summary)
+    /// </summary>
+    public string Description { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// Content type (INFERRED: for content categorization)
+    /// </summary>
+    public string Type { get; set; } = "Lesson";
+    
+    /// <summary>
+    /// Content order (INFERRED: for sequencing)
+    /// </summary>
+    public int Order { get; set; } = 0;
+    
+    /// <summary>
     /// Lesson slides in order
     /// </summary>
     public List<Slide> Slides { get; set; } = new();
@@ -193,9 +274,29 @@ public class LessonContent
     public List<HoverTip> Tips { get; set; } = new();
     
     /// <summary>
+    /// Lesson ID for foreign key relationship (INFERRED: EF Core navigation)
+    /// </summary>
+    public int LessonId { get; set; }
+    
+    /// <summary>
+    /// Parent lesson navigation property (INFERRED: EF Core relationship)
+    /// </summary>
+    public virtual Lesson Lesson { get; set; } = null!;
+    
+    /// <summary>
+    /// Hover tips property alias (INFERRED: for compatibility)
+    /// </summary>
+    public List<HoverTip> HoverTips => Tips;
+    
+    /// <summary>
     /// Quiz questions for this lesson
     /// </summary>
     public List<QuizQuestion> Quiz { get; set; } = new();
+    
+    /// <summary>
+    /// Quiz questions property alias (INFERRED: for compatibility)
+    /// </summary>
+    public List<QuizQuestion> QuizQuestions => Quiz;
     
     /// <summary>
     /// Additional resources
@@ -247,6 +348,16 @@ public class Slide
     /// Speaker notes for educators
     /// </summary>
     public string? SpeakerNotes { get; set; }
+    
+    /// <summary>
+    /// Slide order/sequence (INFERRED: for slide ordering)
+    /// </summary>
+    public int Order { get; set; } = 0;
+    
+    /// <summary>
+    /// Slide metadata (INFERRED: additional slide data)
+    /// </summary>
+    public Dictionary<string, object> Metadata { get; set; } = new Dictionary<string, object>();
 }
 
 /// <summary>
@@ -254,6 +365,12 @@ public class Slide
 /// </summary>
 public class HoverTip
 {
+    /// <summary>
+    /// Unique hover tip identifier (INFERRED: EF Core primary key)
+    /// </summary>
+    [Key]
+    public int Id { get; set; }
+    
     /// <summary>
     /// Element identifier to attach tip to
     /// </summary>
@@ -269,10 +386,31 @@ public class HoverTip
     /// </summary>
     public TipCategory Category { get; set; }
     
+    
     /// <summary>
     /// Position relative to element
     /// </summary>
     public TipPosition Position { get; set; } = TipPosition.Top;
+    
+    /// <summary>
+    /// Word/term being explained (INFERRED: key term)
+    /// </summary>
+    public string Word { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// Detailed explanation (INFERRED: expanded explanation)
+    /// </summary>
+    public string Explanation { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// Lesson content ID for foreign key relationship (INFERRED: EF Core navigation)
+    /// </summary>
+    public string? LessonContentId { get; set; }
+    
+    /// <summary>
+    /// Parent lesson content navigation property (INFERRED: EF Core relationship)
+    /// </summary>
+    public virtual LessonContent? LessonContent { get; set; }
 }
 
 /// <summary>
@@ -337,6 +475,36 @@ public class QuizQuestion
         
         return "🤯 Oops! That's like confusing WiFi with witchcraft - close, but no spell!";
     }
+    
+    /// <summary>
+    /// Wrong answer feedback (INFERRED: alias for IncorrectFeedback compatibility)
+    /// </summary>
+    public List<string> WrongAnswerFeedback => IncorrectFeedback;
+    
+    /// <summary>
+    /// Question tags for categorization (INFERRED: question taxonomy)
+    /// </summary>
+    public List<string> Tags { get; set; } = new List<string>();
+    
+    /// <summary>
+    /// Lesson ID for foreign key relationship (INFERRED: EF Core navigation)
+    /// </summary>
+    public int LessonId { get; set; }
+    
+    /// <summary>
+    /// Parent lesson navigation property (INFERRED: EF Core relationship)
+    /// </summary>
+    public virtual Lesson Lesson { get; set; } = null!;
+    
+    /// <summary>
+    /// Lesson content ID for foreign key relationship (INFERRED: EF Core navigation)
+    /// </summary>
+    public string? LessonContentId { get; set; }
+    
+    /// <summary>
+    /// Parent lesson content navigation property (INFERRED: EF Core relationship)
+    /// </summary>
+    public virtual LessonContent? LessonContent { get; set; }
 }
 
 /// <summary>
@@ -410,6 +578,11 @@ public class ModuleProgress
     public double OverallScore { get; set; }
     
     /// <summary>
+    /// Last accessed timestamp (INFERRED: progress tracking)
+    /// </summary>
+    public DateTime LastAccessedAt { get; set; } = DateTime.UtcNow;
+    
+    /// <summary>
     /// Current lesson being studied
     /// </summary>
     public int CurrentLesson { get; set; } = 1;
@@ -435,6 +608,31 @@ public class ModuleProgress
     public CompletionStatus Status { get; set; } = CompletionStatus.NotStarted;
     
     /// <summary>
+    /// Average score across all lessons (INFERRED: calculated from lesson progress)
+    /// </summary>
+    public double AverageScore => LessonProgress.Any() ? LessonProgress.Average(lp => lp.Score) : 0.0;
+    
+    /// <summary>
+    /// Total lessons in module (INFERRED: calculated from module, converted to settable)
+    /// </summary>
+    public int TotalLessons { get; set; }
+    
+    /// <summary>
+    /// Current lesson ID (INFERRED: derived from CurrentLesson, converted to settable)
+    /// </summary>
+    public int CurrentLessonId { get; set; }
+    
+    /// <summary>
+    /// Completed lessons count (INFERRED: count of completed lesson progress, converted to settable)
+    /// </summary>
+    public int CompletedLessons { get; set; }
+    
+    /// <summary>
+    /// Lesson progress collection (INFERRED: alias for LessonProgress, converted to settable)
+    /// </summary>
+    public ICollection<LessonProgress> LessonProgresses { get; set; } = new List<LessonProgress>();
+    
+    /// <summary>
     /// Parent module
     /// </summary>
     public virtual Module Module { get; set; } = null!;
@@ -448,6 +646,11 @@ public class ModuleProgress
     /// Earned badges
     /// </summary>
     public virtual ICollection<Badge> Badges { get; set; } = new List<Badge>();
+    
+    /// <summary>
+    /// Completion percentage property (INFERRED: computed property for easy access)
+    /// </summary>
+    public double CompletionPercentage => GetCompletionPercentage();
     
     /// <summary>
     /// Calculate completion percentage
@@ -531,6 +734,16 @@ public class LessonProgress
     public double QuizScore { get; set; }
     
     /// <summary>
+    /// Quiz feedback text (INFERRED: EF Core configuration expectation)
+    /// </summary>
+    public string QuizFeedback { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// Score alias for QuizScore (INFERRED: compatibility property for progress calculations)
+    /// </summary>
+    public double Score => QuizScore;
+    
+    /// <summary>
     /// Number of quiz attempts
     /// </summary>
     public int Attempts { get; set; } = 1;
@@ -544,6 +757,21 @@ public class LessonProgress
     /// Current slide index
     /// </summary>
     public int CurrentSlide { get; set; }
+    
+    /// <summary>
+    /// Last accessed timestamp (INFERRED: progress tracking)
+    /// </summary>
+    public DateTime LastAccessedAt { get; set; } = DateTime.UtcNow;
+    
+    /// <summary>
+    /// Current slide index (INFERRED: alias for CurrentSlide, converted to settable)
+    /// </summary>
+    public int CurrentSlideIndex { get; set; }
+    
+    /// <summary>
+    /// Current lesson status
+    /// </summary>
+    public LessonStatus Status { get; set; } = LessonStatus.NotStarted;
     
     /// <summary>
     /// Whether lesson is completed
@@ -625,14 +853,9 @@ public class Badge
     public string BadgeId { get; set; } = string.Empty;
     
     /// <summary>
-    /// User who earned the badge
+    /// Badge name for display
     /// </summary>
-    public string UserId { get; set; } = string.Empty;
-    
-    /// <summary>
-    /// Module progress ID
-    /// </summary>
-    public int ModuleProgressId { get; set; }
+    public string Name { get; set; } = string.Empty;
     
     /// <summary>
     /// Badge title
@@ -645,9 +868,29 @@ public class Badge
     public string Description { get; set; } = string.Empty;
     
     /// <summary>
+    /// Badge icon file path
+    /// </summary>
+    public string? IconPath { get; set; }
+    
+    /// <summary>
     /// Badge icon data
     /// </summary>
     public byte[]? IconData { get; set; }
+    
+    /// <summary>
+    /// Achievement requirements description
+    /// </summary>
+    public string? Requirements { get; set; }
+    
+    /// <summary>
+    /// Reward message when badge is earned
+    /// </summary>
+    public string? RewardMessage { get; set; }
+    
+    /// <summary>
+    /// Associated module ID
+    /// </summary>
+    public int? ModuleId { get; set; }
     
     /// <summary>
     /// Badge category
@@ -660,19 +903,19 @@ public class Badge
     public BadgeRarity Rarity { get; set; }
     
     /// <summary>
-    /// Earned timestamp
+    /// Creation timestamp
     /// </summary>
-    public DateTime EarnedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     
     /// <summary>
-    /// Achievement criteria met
+    /// Collection of user badges (users who earned this badge)
     /// </summary>
-    public string Criteria { get; set; } = string.Empty;
+    public virtual ICollection<UserBadge> UserBadges { get; set; } = new List<UserBadge>();
     
     /// <summary>
-    /// Parent module progress
+    /// Parent module (optional)
     /// </summary>
-    public virtual ModuleProgress ModuleProgress { get; set; } = null!;
+    public virtual Module? Module { get; set; }
     
     /// <summary>
     /// Get witty badge announcement
@@ -694,10 +937,66 @@ public class Badge
 }
 
 /// <summary>
-/// User badge relationship (alias for Badge for legacy compatibility)
+/// User badge relationship - tracks which badges users have earned
 /// </summary>
-public class UserBadge : Badge
+public class UserBadge
 {
+    [Key]
+    public int Id { get; set; }
+    
+    /// <summary>
+    /// User identifier who earned the badge
+    /// </summary>
+    public string UserId { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// Badge ID that was earned
+    /// </summary>
+    public int BadgeId { get; set; }
+    
+    /// <summary>
+    /// When the badge was awarded
+    /// </summary>
+    public DateTime AwardedAt { get; set; } = DateTime.UtcNow;
+    
+    /// <summary>
+    /// Navigation property to the badge
+    /// </summary>
+    public virtual Badge? Badge { get; set; }
+}
+
+/// <summary>
+/// User streak tracking for gamification (INFERRED: learning consistency tracking)
+/// </summary>
+public class UserStreak
+{
+    [Key]
+    public int Id { get; set; }
+    
+    /// <summary>
+    /// User identifier
+    /// </summary>
+    public string UserId { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// Current streak count (days)
+    /// </summary>
+    public int CurrentStreak { get; set; }
+    
+    /// <summary>
+    /// Longest streak achieved
+    /// </summary>
+    public int LongestStreak { get; set; }
+    
+    /// <summary>
+    /// Last activity date
+    /// </summary>
+    public DateTime LastActivityDate { get; set; } = DateTime.UtcNow;
+    
+    /// <summary>
+    /// Streak start date
+    /// </summary>
+    public DateTime StreakStartDate { get; set; } = DateTime.UtcNow;
 }
 
 #endregion
@@ -789,6 +1088,17 @@ public enum CompletionStatus
 }
 
 /// <summary>
+/// Lesson status enumeration for tracking individual lesson progress
+/// </summary>
+public enum LessonStatus
+{
+    NotStarted,
+    InProgress,
+    Completed,
+    Mastered
+}
+
+/// <summary>
 /// Badge categories
 /// </summary>
 public enum BadgeCategory
@@ -834,6 +1144,102 @@ public class ModuleStartedEvent : EducationEventBase
     public int ModuleId { get; set; }
     public string ModuleTitle { get; set; } = string.Empty;
     public DifficultyLevel Difficulty { get; set; }
+    
+    // INFERRED: Missing properties for module started event
+    public string ModuleName { get; set; } = string.Empty; // Alias for consistency, converted to settable
+    public DateTime StartedAt { get; set; } = DateTime.UtcNow;
+    public int TotalLessons { get; set; } = 0; // To be set when creating the event
+}
+
+/// <summary>
+/// User-specific lesson progress tracking with detailed analytics
+/// Bridges user activity with lesson completion metrics for cosmic learning insights
+/// </summary>
+public class UserLessonProgress
+{
+    [Key]
+    public int Id { get; init; }
+    
+    /// <summary>
+    /// User identifier - the cosmic learner's unique signature
+    /// </summary>
+    [Required]
+    [MaxLength(100)]
+    public string UserId { get; init; } = string.Empty;
+    
+    /// <summary>
+    /// Associated lesson ID
+    /// </summary>
+    public int LessonId { get; init; }
+    
+    /// <summary>
+    /// Module ID for efficient querying
+    /// </summary>
+    public int ModuleId { get; init; }
+    
+    /// <summary>
+    /// Current progress status
+    /// </summary>
+    public LessonStatus Status { get; set; } = LessonStatus.NotStarted;
+    
+    /// <summary>
+    /// Quiz score achieved (0-100)
+    /// </summary>
+    public double? QuizScore { get; set; }
+    
+    /// <summary>
+    /// Number of attempts made
+    /// </summary>
+    public int Attempts { get; set; } = 0;
+    
+    /// <summary>
+    /// Total time spent in minutes
+    /// </summary>
+    public int TimeSpentMinutes { get; set; } = 0;
+    
+    /// <summary>
+    /// When the user first started this lesson
+    /// </summary>
+    public DateTime StartedAt { get; init; } = DateTime.UtcNow;
+    
+    /// <summary>
+    /// When the lesson was completed (if applicable)
+    /// </summary>
+    public DateTime? CompletedAt { get; set; }
+    
+    /// <summary>
+    /// Last activity timestamp for session tracking
+    /// </summary>
+    public DateTime LastActivityAt { get; set; } = DateTime.UtcNow;
+    
+    /// <summary>
+    /// Navigation property to lesson
+    /// </summary>
+    public virtual Lesson? Lesson { get; set; }
+    
+    /// <summary>
+    /// Navigation property to module
+    /// </summary>
+    public virtual Module? Module { get; set; }
+    
+    /// <summary>
+    /// Get witty progress summary with cosmic flair
+    /// </summary>
+    public string GetProgressSummary()
+    {
+        return Status switch
+        {
+            LessonStatus.NotStarted => "🌟 Ready to embark on this cosmic journey!",
+            LessonStatus.InProgress => $"🚀 {TimeSpentMinutes} minutes into the adventure (Attempt #{Attempts + 1})",
+            LessonStatus.Completed => $"🎓 Mastered with {QuizScore:F1}% stellar performance in {Attempts} attempts!",
+            _ => "🌌 Floating in the digital cosmos..."
+        };
+    }
+    
+    /// <summary>
+    /// Check if the lesson is completed
+    /// </summary>
+    public bool IsCompleted => Status == LessonStatus.Completed;
 }
 
 /// <summary>
@@ -847,6 +1253,21 @@ public class LessonCompletedEvent : EducationEventBase
     public double Score { get; set; }
     public int Attempts { get; set; }
     public int TimeSpentMinutes { get; set; }
+    
+    /// <summary>
+    /// Quiz score (INFERRED: alias for Score for compatibility, converted to settable)
+    /// </summary>
+    public double QuizScore { get; set; }
+    
+    /// <summary>
+    /// Badges awarded for completion (INFERRED: achievement tracking)
+    /// </summary>
+    public List<string> BadgesAwarded { get; set; } = new List<string>();
+    
+    /// <summary>
+    /// Completion timestamp (INFERRED: lesson completion tracking)
+    /// </summary>
+    public DateTime CompletedAt { get; set; } = DateTime.UtcNow;
 }
 
 /// <summary>
@@ -872,6 +1293,21 @@ public class BadgeUnlockedEvent : EducationEventBase
     public BadgeCategory Category { get; set; }
     public BadgeRarity Rarity { get; set; }
     public string Criteria { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// Badge name (INFERRED: alias for BadgeTitle for compatibility, converted to settable)
+    /// </summary>
+    public string BadgeName { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// Badge description (INFERRED: detailed description of badge achievement)
+    /// </summary>
+    public string BadgeDescription { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// When badge was awarded (INFERRED: timestamp for badge unlock event)
+    /// </summary>
+    public DateTime AwardedAt { get; set; }
 }
 
 /// <summary>
@@ -895,6 +1331,75 @@ public class QuizPassedEvent : EducationEventBase
     public double Score { get; set; }
     public bool Passed { get; set; }
     public string LessonTitle { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// User engagement profile for analytics and personalization (INFERRED: user analytics entity)
+/// </summary>
+public class UserEngagementProfile
+{
+    [Key]
+    public int Id { get; set; }
+    
+    /// <summary>
+    /// User identifier
+    /// </summary>
+    public string UserId { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// Total time spent learning (in minutes)
+    /// </summary>
+    public int TotalLearningTimeMinutes { get; set; }
+    
+    /// <summary>
+    /// Preferred learning times of day
+    /// </summary>
+    public List<int> PreferredLearningHours { get; set; } = new();
+    
+    /// <summary>
+    /// Engagement score (0-100)
+    /// </summary>
+    public double EngagementScore { get; set; }
+    
+    /// <summary>
+    /// Learning style preferences
+    /// </summary>
+    public List<string> LearningStylePreferences { get; set; } = new();
+    
+    /// <summary>
+    /// Last activity timestamp
+    /// </summary>
+    public DateTime LastActivityAt { get; set; }
+    
+    /// <summary>
+    /// User engagement level (INFERRED: for gamification)
+    /// </summary>
+    public EngagementLevel Level { get; set; }
+    
+    /// <summary>
+    /// Preferred features as JSON (INFERRED: feature preferences)
+    /// </summary>
+    public string PreferredFeatures { get; set; } = "{}";
+    
+    /// <summary>
+    /// Average session duration in minutes (INFERRED: analytics metric)
+    /// </summary>
+    public double AverageSessionMinutes { get; set; }
+    
+    /// <summary>
+    /// Attention score for gamification (INFERRED: duplicate of EngagementScore for compatibility)
+    /// </summary>
+    public double AttentionScore { get; set; }
+    
+    /// <summary>
+    /// Total activities count (INFERRED: activity counter)
+    /// </summary>
+    public int TotalActivities { get; set; }
+    
+    /// <summary>
+    /// Last activity date for compatibility (INFERRED: alias for LastActivityAt)
+    /// </summary>
+    public DateTime LastActivity { get; set; }
 }
 
 #endregion

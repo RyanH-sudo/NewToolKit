@@ -75,4 +75,9 @@ public class ScriptingLessonCompletedEvent
     /// Witty feedback message for the achievement
     /// </summary>
     public string WittyFeedback { get; init; } = string.Empty;
+
+    /// <summary>
+    /// Network automation opportunities identified for this lesson
+    /// </summary>
+    public List<string> NetworkAutomationOpportunities { get; init; } = new();
 }

@@ -60,4 +60,31 @@ public static class Module8ContentSeed
 
         return lessons;
     }
+
+    public static Module GetModule8Content()
+    {
+        return new Module
+        {
+            Id = 8,
+            Title = "Cloud Computing & Virtualization",
+            Description = "Master cloud technologies and network virtualization",
+            Category = "Cloud",
+            Difficulty = DifficultyLevel.Advanced,
+            EstimatedMinutes = 600,
+            Prerequisites = "Complete Module 7: Wireless Networking & Mobility",
+            LearningOutcomes = "Students will architect cloud networks, implement virtualization solutions, and manage hybrid cloud environments",
+            LearningObjectives = new List<string> { "Design cloud network architectures", "Implement network virtualization technologies", "Manage hybrid and multi-cloud environments" },
+            Tags = new List<string> { "cloud", "virtualization", "aws", "azure", "advanced" },
+            Lessons = GetModule8Lessons(),
+            CreatedAt = DateTime.UtcNow
+        };
+    }
+
+    public static List<Badge> GetModule8Badges()
+    {
+        return new List<Badge>
+        {
+            new Badge { BadgeId = "cloud_commander", Name = "Cloud Commander", Description = "Successfully completed Cloud Computing & Virtualization module", Category = BadgeCategory.Progress, Rarity = BadgeRarity.Rare, Requirements = "Complete all lessons in Module 8", RewardMessage = "☁️ Your cloud command is supreme!", CreatedAt = DateTime.UtcNow }
+        };
+    }
 }

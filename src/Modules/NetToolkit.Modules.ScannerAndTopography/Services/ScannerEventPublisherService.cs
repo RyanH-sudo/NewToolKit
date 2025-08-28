@@ -24,12 +24,34 @@ public class ScannerEventPublisherService : IScannerEventPublisher
         _logger.LogInformation("📡 Scanner Event Publisher initialized - ready to broadcast digital discoveries across the cosmos!");
     }
 
+    #region IEventBus Implementation
+
     /// <summary>
     /// Publish async event with base event bus functionality
     /// </summary>
-    public async Task PublishAsync<T>(T eventData) where T : class
+    public async Task PublishAsync<T>(T eventData, CancellationToken cancellationToken = default) where T : class
     {
-        await _eventBus.PublishAsync(eventData);
+        await _eventBus.PublishAsync(eventData, cancellationToken);
+    }
+
+    public async Task SubscribeAsync<T>(Func<T, Task> handler) where T : class
+    {
+        await _eventBus.SubscribeAsync(handler);
+    }
+    
+    public async Task SubscribeAsync<T>(string eventName, Func<T, Task> handler) where T : class
+    {
+        await _eventBus.SubscribeAsync(eventName, handler);
+    }
+    
+    public async Task UnsubscribeAsync<T>() where T : class
+    {
+        await _eventBus.UnsubscribeAsync<T>();
+    }
+    
+    public async Task UnsubscribeAsync<T>(string eventName, Func<T, Task> handler) where T : class
+    {
+        await _eventBus.UnsubscribeAsync(eventName, handler);
     }
 
     /// <summary>
@@ -47,6 +69,8 @@ public class ScannerEventPublisherService : IScannerEventPublisher
     {
         _eventBus.Unsubscribe(handler);
     }
+    
+    #endregion
 
     /// <summary>
     /// Publish scan initiation event - announcing the beginning of digital reconnaissance
@@ -277,7 +301,7 @@ public class ScannerEventPublisherService : IScannerEventPublisher
                 _eventCounts[eventType] = _eventCounts.GetValueOrDefault(eventType, 0) + 1;
             }
 
-            await _eventBus.PublishAsync(eventData);
+            await _eventBus.PublishAsync(eventData, CancellationToken.None);
             
             _logger.LogDebug("📤 Event published: {EventType} (Total: {Count})", eventType, _eventCounts[eventType]);
         }

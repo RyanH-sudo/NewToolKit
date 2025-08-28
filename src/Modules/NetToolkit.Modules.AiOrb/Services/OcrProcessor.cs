@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using Tesseract;
+using System.IO;
+using System.Net.Http;
 
 namespace NetToolkit.Modules.AiOrb.Services;
 
@@ -104,8 +106,14 @@ public class OcrProcessor : IOcrProcessor
             // Preprocess image for better OCR accuracy
             var preprocessedBitmap = PreprocessImageForOcr(bitmap);
             
-            // Perform OCR
-            using var pix = PixConverter.ToPix(preprocessedBitmap);
+            // Perform OCR (INFERRED: Convert Bitmap to Pix using Tesseract.Net standard method)
+            byte[] imageBytes;
+            using (var stream = new MemoryStream())
+            {
+                preprocessedBitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                imageBytes = stream.ToArray();
+            }
+            using var pix = Pix.LoadFromMemory(imageBytes);
             using var page = _tesseractEngine!.Process(pix);
             
             var extractedText = page.GetText();
@@ -168,7 +176,7 @@ public class OcrProcessor : IOcrProcessor
             graphics.CopyFromScreen(captureRect.X, captureRect.Y, 0, 0, captureRect.Size, CopyPixelOperation.SourceCopy);
             
             using var memoryStream = new MemoryStream();
-            bitmap.Save(memoryStream, ImageFormat.Png);
+            bitmap.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
             
             var screenshotData = memoryStream.ToArray();
             
@@ -523,4 +531,14 @@ internal static class SystemInformation
 
     [DllImport("user32.dll")]
     private static extern int GetSystemMetrics(int nIndex);
+    
+    /// <summary>
+    /// Convert Bitmap to byte array for Tesseract processing (INFERRED: helper method for OCR)
+    /// </summary>
+    public static byte[] BitmapToByteArray(Bitmap bitmap)
+    {
+        using var stream = new MemoryStream();
+        bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+        return stream.ToArray();
+    }
 }

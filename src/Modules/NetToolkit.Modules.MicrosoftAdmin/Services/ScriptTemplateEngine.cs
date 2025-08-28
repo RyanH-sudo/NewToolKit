@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Management.Automation;
 using System.Text;
+using System.IO;
 
 namespace NetToolkit.Modules.MicrosoftAdmin.Services;
 
@@ -776,10 +777,12 @@ Write-Output ""Admin operation completed successfully""")
             
             // Try to parse the script to check syntax
             var tokens = new List<PSToken>();
-            var parseErrors = new List<PSParseError>();
             
-            Parser.ParseInput(script, out tokens, out var parseErrorsArray);
-            parseErrors.AddRange(parseErrorsArray);
+            // INFERRED: Use PSParser for script validation in System.Management.Automation v7.4.0
+            System.Collections.ObjectModel.Collection<PSParseError> parseErrorsCollection;
+            var parseResult = PSParser.Tokenize(script, out parseErrorsCollection);
+            if (parseResult != null) tokens.AddRange(parseResult);
+            var parseErrors = parseErrorsCollection.ToList();
             
             if (parseErrors.Count > 0)
             {

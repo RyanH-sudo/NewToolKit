@@ -372,27 +372,27 @@ public class SecurityScanModule : IModule
         switch (considerationLower)
         {
             case "routing table poisoning":
-                _logger?.LogInfo("🚨 Enabling routing table poisoning detection - Malicious route tampering alerts activated!");
+                _logger?.LogInformation("🚨 Enabling routing table poisoning detection - Malicious route tampering alerts activated!");
                 break;
                 
             case "bgp hijacking protection":
-                _logger?.LogInfo("🛡️ Enabling BGP hijacking protection - Border gateway security shields raised!");
+                _logger?.LogInformation("🛡️ Enabling BGP hijacking protection - Border gateway security shields raised!");
                 break;
                 
             case "ospf authentication":
-                _logger?.LogInfo("🔐 Enabling OSPF authentication checks - Neighbor verification protocols engaged!");
+                _logger?.LogInformation("🔐 Enabling OSPF authentication checks - Neighbor verification protocols engaged!");
                 break;
                 
             case "route redistribution security":
-                _logger?.LogInfo("🔄 Enabling route redistribution security - Cross-protocol security barriers erected!");
+                _logger?.LogInformation("🔄 Enabling route redistribution security - Cross-protocol security barriers erected!");
                 break;
                 
             case "routing loop vulnerability":
-                _logger?.LogInfo("🌀 Enabling routing loop vulnerability detection - Infinite path traps identified!");
+                _logger?.LogInformation("🌀 Enabling routing loop vulnerability detection - Infinite path traps identified!");
                 break;
                 
             case "rip authentication":
-                _logger?.LogInfo("🗝️ Enabling RIP authentication scanning - Legacy protocol security enhanced!");
+                _logger?.LogInformation("🗝️ Enabling RIP authentication scanning - Legacy protocol security enhanced!");
                 break;
                 
             default:
@@ -413,35 +413,35 @@ public class SecurityScanModule : IModule
         switch (featureLower)
         {
             case "advanced bgp security scanning":
-                _logger?.LogInfo("🌐 Unlocking advanced BGP security scanning - Inter-domain threats shall not pass!");
+                _logger?.LogInformation("🌐 Unlocking advanced BGP security scanning - Inter-domain threats shall not pass!");
                 break;
                 
             case "mpls security analysis":
-                _logger?.LogInfo("🏷️ Unlocking MPLS security analysis - Label-switched security mastery achieved!");
+                _logger?.LogInformation("🏷️ Unlocking MPLS security analysis - Label-switched security mastery achieved!");
                 break;
                 
             case "routing protocol fuzzing":
-                _logger?.LogInfo("🎯 Unlocking routing protocol fuzzing - Protocol weakness discovery enabled!");
+                _logger?.LogInformation("🎯 Unlocking routing protocol fuzzing - Protocol weakness discovery enabled!");
                 break;
                 
             case "isis security assessment":
-                _logger?.LogInfo("🏺 Unlocking ISIS security assessment - Ancient protocol vulnerabilities revealed!");
+                _logger?.LogInformation("🏺 Unlocking ISIS security assessment - Ancient protocol vulnerabilities revealed!");
                 break;
                 
             case "eigrp authentication scanning":
-                _logger?.LogInfo("🔐 Unlocking EIGRP authentication scanning - Cisco proprietary security verified!");
+                _logger?.LogInformation("🔐 Unlocking EIGRP authentication scanning - Cisco proprietary security verified!");
                 break;
                 
             case "route filtering bypass detection":
-                _logger?.LogInfo("🕳️ Unlocking route filter bypass detection - Security gap identification mastered!");
+                _logger?.LogInformation("🕳️ Unlocking route filter bypass detection - Security gap identification mastered!");
                 break;
                 
             case "routing convergence attacks":
-                _logger?.LogInfo("⚡ Unlocking routing convergence attack detection - Network stability threat analysis!");
+                _logger?.LogInformation("⚡ Unlocking routing convergence attack detection - Network stability threat analysis!");
                 break;
                 
             case "vpn routing security":
-                _logger?.LogInfo("🔐 Unlocking VPN routing security assessment - Secure tunnel integrity verification!");
+                _logger?.LogInformation("🔐 Unlocking VPN routing security assessment - Secure tunnel integrity verification!");
                 break;
                 
             default:
@@ -605,9 +605,31 @@ internal class SecurityEventPublisherService : ISecurityEventPublisher
         _logger = logger;
     }
 
-    public async Task PublishAsync<T>(T eventData) where T : class
+    #region IEventBus Implementation
+    
+    public async Task PublishAsync<T>(T eventData, CancellationToken cancellationToken = default) where T : class
     {
-        await _eventBus.PublishAsync(eventData);
+        await _eventBus.PublishAsync(eventData, cancellationToken);
+    }
+
+    public async Task SubscribeAsync<T>(Func<T, Task> handler) where T : class
+    {
+        await _eventBus.SubscribeAsync(handler);
+    }
+    
+    public async Task SubscribeAsync<T>(string eventName, Func<T, Task> handler) where T : class
+    {
+        await _eventBus.SubscribeAsync(eventName, handler);
+    }
+    
+    public async Task UnsubscribeAsync<T>() where T : class
+    {
+        await _eventBus.UnsubscribeAsync<T>();
+    }
+    
+    public async Task UnsubscribeAsync<T>(string eventName, Func<T, Task> handler) where T : class
+    {
+        await _eventBus.UnsubscribeAsync(eventName, handler);
     }
 
     public void Subscribe<T>(Func<T, Task> handler) where T : class
@@ -619,6 +641,8 @@ internal class SecurityEventPublisherService : ISecurityEventPublisher
     {
         _eventBus.Unsubscribe(handler);
     }
+    
+    #endregion
 
     public async Task PublishScanLaunchedAsync(string scanId, Models.ScanType scanType, List<Models.ScanTarget> targets)
     {
@@ -633,7 +657,7 @@ internal class SecurityEventPublisherService : ISecurityEventPublisher
             TargetCount = targets.Count,
             Timestamp = DateTime.UtcNow,
             Source = "SecurityScanner"
-        });
+        }, CancellationToken.None);
     }
 
     public async Task PublishVulnerabilityUnearthedAsync(Models.VulnerabilityEntry vulnerability)
@@ -651,7 +675,7 @@ internal class SecurityEventPublisherService : ISecurityEventPublisher
             Port = vulnerability.Port,
             Timestamp = DateTime.UtcNow,
             Source = "SecurityScanner"
-        });
+        }, CancellationToken.None);
     }
 
     public async Task PublishCriticalVulnerabilityAlertAsync(Models.VulnerabilityEntry vulnerability)
@@ -670,7 +694,7 @@ internal class SecurityEventPublisherService : ISecurityEventPublisher
             Timestamp = DateTime.UtcNow,
             Source = "SecurityScanner",
             Priority = "CRITICAL"
-        });
+        }, CancellationToken.None);
     }
 
     // Additional placeholder implementations for remaining interface methods...

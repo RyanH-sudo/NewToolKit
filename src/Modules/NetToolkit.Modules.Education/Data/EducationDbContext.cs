@@ -24,10 +24,15 @@ public class EducationDbContext : DbContext
     // Progress tracking entities
     public DbSet<ModuleProgress> ModuleProgress { get; set; } = null!;
     public DbSet<LessonProgress> LessonProgress { get; set; } = null!;
+    public DbSet<UserLessonProgress> UserLessonProgress { get; set; } = null!;
 
     // Gamification entities
     public DbSet<Badge> Badges { get; set; } = null!;
     public DbSet<UserBadge> UserBadges { get; set; } = null!;
+    public DbSet<UserStreak> UserStreaks { get; set; } = null!;
+    
+    // Analytics entities
+    public DbSet<UserEngagementProfile> UserEngagementProfiles { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -42,6 +47,8 @@ public class EducationDbContext : DbContext
         ConfigureLessonProgressEntity(modelBuilder);
         ConfigureBadgeEntity(modelBuilder);
         ConfigureUserBadgeEntity(modelBuilder);
+        ConfigureUserStreakEntity(modelBuilder);
+        ConfigureUserEngagementProfileEntity(modelBuilder);
     }
 
     private static void ConfigureModuleEntity(ModelBuilder modelBuilder)
@@ -62,12 +69,9 @@ public class EducationDbContext : DbContext
             .IsRequired()
             .HasMaxLength(100);
 
-        // Configure JSON columns for lists
+        // Configure Prerequisites as a string (no conversion needed)
         moduleEntity.Property(m => m.Prerequisites)
-            .HasConversion(
-                v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
-                v => JsonSerializer.Deserialize<List<string>>(v, JsonSerializerOptions.Default) ?? new List<string>()
-            );
+            .HasMaxLength(500);
 
         moduleEntity.Property(m => m.LearningObjectives)
             .HasConversion(
@@ -315,6 +319,50 @@ public class EducationDbContext : DbContext
         // Unique constraint - user can't earn the same badge twice
         userBadgeEntity.HasIndex(ub => new { ub.UserId, ub.BadgeId }).IsUnique();
         userBadgeEntity.HasIndex(ub => ub.AwardedAt);
+    }
+
+    private static void ConfigureUserStreakEntity(ModelBuilder modelBuilder)
+    {
+        var userStreakEntity = modelBuilder.Entity<UserStreak>();
+        
+        userStreakEntity.HasKey(us => us.Id);
+        
+        userStreakEntity.Property(us => us.UserId)
+            .IsRequired()
+            .HasMaxLength(100);
+
+        // Unique constraint - one streak record per user
+        userStreakEntity.HasIndex(us => us.UserId).IsUnique();
+        userStreakEntity.HasIndex(us => us.LastActivityDate);
+    }
+
+    private static void ConfigureUserEngagementProfileEntity(ModelBuilder modelBuilder)
+    {
+        var userEngagementEntity = modelBuilder.Entity<UserEngagementProfile>();
+        
+        userEngagementEntity.HasKey(uep => uep.Id);
+        
+        userEngagementEntity.Property(uep => uep.UserId)
+            .IsRequired()
+            .HasMaxLength(100);
+
+        // Configure JSON columns for lists
+        userEngagementEntity.Property(uep => uep.PreferredLearningHours)
+            .HasConversion(
+                v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
+                v => JsonSerializer.Deserialize<List<int>>(v, JsonSerializerOptions.Default) ?? new List<int>()
+            );
+
+        userEngagementEntity.Property(uep => uep.LearningStylePreferences)
+            .HasConversion(
+                v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
+                v => JsonSerializer.Deserialize<List<string>>(v, JsonSerializerOptions.Default) ?? new List<string>()
+            );
+
+        // Unique constraint and indexes
+        userEngagementEntity.HasIndex(uep => uep.UserId).IsUnique();
+        userEngagementEntity.HasIndex(uep => uep.LastActivityAt);
+        userEngagementEntity.HasIndex(uep => uep.EngagementScore);
     }
 
     /// <summary>

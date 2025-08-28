@@ -4,6 +4,8 @@ using NetToolkit.Modules.AiOrb.Models;
 using Newtonsoft.Json;
 using System.Security.Cryptography;
 using System.Text;
+using System.IO;
+using System.Net.Http;
 
 namespace NetToolkit.Modules.AiOrb.Services;
 
